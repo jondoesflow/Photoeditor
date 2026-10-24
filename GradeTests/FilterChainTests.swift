@@ -5,7 +5,7 @@ import Testing
 
 @Suite("FilterChain: what each setting does to real pixels")
 struct FilterChainTests {
-    private let grey = TestImages.solid(0.5, 0.5, 0.5)
+    private var grey: CIImage { TestImages.solid(0.5, 0.5, 0.5) }
 
     @Test("A neutral recipe returns the input untouched")
     func neutralIsIdentity() {
