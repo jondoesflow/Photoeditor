@@ -175,14 +175,14 @@
       "name": "Storm",
       "category": "moody",
       "recipe": {
-        "exposure": -0.3,
-        "contrast": 0.35,
+        "exposure": -0.45,
+        "contrast": 0.45,
         "highlights": -0.4,
         "shadows": 0.1,
         "warmth": -0.25,
         "saturation": -0.4,
-        "skyDarken": 0.6,
-        "vignette": 0.45,
+        "skyDarken": 0.8,
+        "vignette": 0.55,
         "sharpen": 0.3
       }
     },

@@ -30,7 +30,8 @@ enum FilterChain {
             image = filter.outputImage ?? image
         }
         // CIToneCurve converts to a perceptual curve space itself, so it runs on linear input.
-        image = toneCurve(image, recipe)
+        // It also lifts the empty area outside the photo, so crop straight away.
+        image = toneCurve(image, recipe).cropped(to: extent)
         if recipe[.glow] > 0 {
             image = glow(image, amount: recipe[.glow], unit: unit)
         }
@@ -150,7 +151,8 @@ enum FilterChain {
         let threshold: CGFloat = 0.45
         let gain = 1 / (1 - threshold)
         let highlights = CIFilter.colorMatrix()
-        highlights.inputImage = image
+        // Extend the photo's own edge pixels outwards so the blur never pulls in anything from outside it.
+        highlights.inputImage = image.cropped(to: extent).clampedToExtent()
         highlights.rVector = CIVector(x: gain, y: 0, z: 0, w: 0)
         highlights.gVector = CIVector(x: 0, y: gain, z: 0, w: 0)
         highlights.bVector = CIVector(x: 0, y: 0, z: gain, w: 0)
@@ -161,7 +163,7 @@ enum FilterChain {
             "inputMaxComponents": CIVector(x: 4, y: 4, z: 4, w: 1),
         ]) else { return image }
 
-        let halo = bright.clampedToExtent()
+        let halo = bright
             .applyingGaussianBlur(sigma: Double(24 * unit))
             .cropped(to: extent)
         let add = CIFilter.additionCompositing()

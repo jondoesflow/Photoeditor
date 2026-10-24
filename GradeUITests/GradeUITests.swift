@@ -118,8 +118,10 @@ final class GradeUITests: XCTestCase {
         app.alerts.buttons["Save"].tap()
 
         app.buttons["Presets"].tap()
-        XCTAssertTrue(app.buttons["category-mine"].waitForExistence(timeout: 5))
-        app.buttons["category-mine"].tap()
+        let myLooks = app.buttons["category-mine"]
+        XCTAssertTrue(myLooks.waitForExistence(timeout: 5))
+        scrollIntoView(myLooks, in: app)
+        myLooks.tap()
         XCTAssertTrue(app.buttons["Holiday"].waitForExistence(timeout: 5))
         _ = waitForCanvas(app, label: "Holiday")
         screenshot("08-my-looks", app)
