@@ -65,6 +65,7 @@ struct EditorView: View {
                 original: model.original,
                 edited: model.edited,
                 lookName: model.selectedPreset?.name ?? "Original",
+                isCurrent: model.isPreviewCurrent,
                 isComparing: $isComparing
             )
             .padding(.horizontal, 12)

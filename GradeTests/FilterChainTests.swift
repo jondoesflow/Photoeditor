@@ -149,6 +149,26 @@ struct FilterChainTests {
         }
     }
 
+    @Test("Presets with a vignette darken the corners, never brighten them")
+    func presetCorners() throws {
+        let library = try PresetLibrary.loadBundled()
+        let image = TestImages.solid(0.5, 0.5, 0.5, size: CGSize(width: 300, height: 200))
+        for preset in library.presets where preset.recipe[.vignette] > 0 {
+            let bitmap = TestImages.render(preset.recipe, on: image)
+            let corner = bitmap.mean(CGRect(x: 0, y: 180, width: 20, height: 20)).brightness
+            let centre = bitmap.mean(CGRect(x: 140, y: 90, width: 20, height: 20)).brightness
+            #expect(corner < centre, "\(preset.id): corner \(corner) vs centre \(centre)")
+        }
+    }
+
+    @Test("Grain is centred: it doesn't change a preset's overall brightness")
+    func grainIsNeutralInPresets() {
+        let image = TestImages.gradient()
+        let without = TestImages.render(Recipe([.contrast: 0.2]), on: image).mean().brightness
+        let with = TestImages.render(Recipe([.contrast: 0.2, .grain: 1]), on: image).mean().brightness
+        #expect(abs(with - without) < 0.02)
+    }
+
     @Test("A preset looks the same on a small preview and a large export")
     func resolutionIndependent() throws {
         let preset = try #require(PresetLibrary.loadBundled().preset(id: "neon-nights"))

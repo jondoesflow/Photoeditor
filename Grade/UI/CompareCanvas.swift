@@ -6,6 +6,8 @@ struct CompareCanvas: View {
     let original: RenderedImage?
     let edited: RenderedImage?
     let lookName: String
+    /// False while a newer preview is rendering; exposed to UI tests as the canvas value.
+    let isCurrent: Bool
     @Binding var isComparing: Bool
 
     @State private var split: CGFloat = 0.5
@@ -28,6 +30,7 @@ struct CompareCanvas: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .accessibilityElement(children: .ignore)
                 .accessibilityLabel(isPeeking ? "Original photo" : "Photo with \(lookName)")
+                .accessibilityValue(isCurrent ? "ready" : "rendering")
                 .accessibilityIdentifier("canvas")
         }
     }

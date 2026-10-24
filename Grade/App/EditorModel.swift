@@ -29,6 +29,8 @@ final class EditorModel {
     private(set) var phase: Phase = .empty
     private(set) var original: RenderedImage?
     private(set) var edited: RenderedImage?
+    /// The recipe `edited` was rendered with.
+    private(set) var editedRecipe: Recipe?
     private(set) var thumbnails: [String: RenderedImage] = [:]
     private(set) var selectedPresetID: String?
     private(set) var intensity: Double = 1
@@ -76,6 +78,9 @@ final class EditorModel {
 
     var hasEdits: Bool { !recipe.isNeutral }
 
+    /// False while a newer preview is still rendering.
+    var isPreviewCurrent: Bool { edited != nil && editedRecipe == recipe }
+
     var canSave: Bool { phase == .editing && saveState != .saving }
 
     // MARK: - Loading
@@ -88,12 +93,15 @@ final class EditorModel {
         do {
             try await renderer.load(data)
             original = try await renderer.renderPreview(.neutral)
+            let recipe = recipe
             edited = try await renderer.renderPreview(recipe)
+            editedRecipe = recipe
             phase = .editing
             await refreshThumbnails()
         } catch {
             original = nil
             edited = nil
+            editedRecipe = nil
             thumbnails = [:]
             phase = .failed(RenderError.unreadableImage.localizedDescription)
         }
@@ -206,6 +214,7 @@ final class EditorModel {
             guard let image = try? await renderer.renderPreview(recipe),
                   !Task.isCancelled, generation == renderGeneration else { return }
             edited = image
+            editedRecipe = recipe
         }
     }
 

@@ -209,17 +209,20 @@ enum FilterChain {
     /// Monochrome film grain: multiplies each pixel by noise averaging 1, so brightness is unchanged.
     private static func grain(_ image: CIImage, amount: Double, unit: CGFloat) -> CIImage {
         let extent = image.extent
-        guard let noise = CIFilter.randomGenerator().outputImage else { return image }
         let size = max(1, 1.1 * unit)
+        let tile = CIFilter.affineTile()
+        tile.inputImage = GrainTexture.image
+        tile.transform = CGAffineTransform(scaleX: size, y: size)
+        guard let noise = tile.outputImage else { return image }
         let spread = CGFloat(amount * 0.35)
-        let mono = CIFilter.colorMatrix()
-        mono.inputImage = noise.transformed(by: CGAffineTransform(scaleX: size, y: size))
-        mono.rVector = CIVector(x: spread, y: 0, z: 0, w: 0)
-        mono.gVector = CIVector(x: spread, y: 0, z: 0, w: 0)
-        mono.bVector = CIVector(x: spread, y: 0, z: 0, w: 0)
-        mono.aVector = CIVector(x: 0, y: 0, z: 0, w: 0)
-        mono.biasVector = CIVector(x: 1 - spread / 2, y: 1 - spread / 2, z: 1 - spread / 2, w: 1)
-        guard let texture = mono.outputImage?.cropped(to: extent) else { return image }
+        let factor = CIFilter.colorMatrix()
+        factor.inputImage = noise
+        factor.rVector = CIVector(x: spread, y: 0, z: 0, w: 0)
+        factor.gVector = CIVector(x: spread, y: 0, z: 0, w: 0)
+        factor.bVector = CIVector(x: spread, y: 0, z: 0, w: 0)
+        factor.aVector = CIVector(x: 0, y: 0, z: 0, w: 0)
+        factor.biasVector = CIVector(x: 1 - spread / 2, y: 1 - spread / 2, z: 1 - spread / 2, w: 1)
+        guard let texture = factor.outputImage?.cropped(to: extent) else { return image }
         let multiply = CIFilter.multiplyCompositing()
         multiply.inputImage = texture
         multiply.backgroundImage = image
@@ -252,4 +255,28 @@ enum FilterChain {
         guard let space = CGColorSpace(name: CGColorSpace.linearSRGB) else { return nil }
         return CIColor(red: CGFloat(red), green: CGFloat(green), blue: CGFloat(blue), alpha: 1, colorSpace: space)
     }
+}
+
+/// A tileable grain pattern with values centred on 0.5. It is built from bytes and has no colour space,
+/// so Core Image uses the values exactly as written (`CIRandomGenerator` output is not neutral once
+/// colour-managed). The pattern is seeded, so the same photo always gets the same grain.
+enum GrainTexture {
+    static let size = 256
+
+    static var image: CIImage {
+        CIImage(bitmapData: bytes, bytesPerRow: size, size: CGSize(width: size, height: size), format: .L8, colorSpace: nil)
+    }
+
+    private static let bytes: Data = {
+        var state: UInt32 = 0x9E37_79B9
+        func next() -> Int {
+            // xorshift32
+            state ^= state << 13
+            state ^= state >> 17
+            state ^= state << 5
+            return Int(state & 0xFF)
+        }
+        // The average of two uniform samples gives a softer, film-like distribution.
+        return Data((0..<(size * size)).map { _ in UInt8((next() + next()) / 2) })
+    }()
 }

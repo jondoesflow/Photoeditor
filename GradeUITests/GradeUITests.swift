@@ -27,13 +27,11 @@ final class GradeUITests: XCTestCase {
     private func waitForCanvas(_ app: XCUIApplication, label: String? = nil) -> XCUIElement {
         let canvas = app.descendants(matching: .any)["canvas"]
         XCTAssertTrue(canvas.waitForExistence(timeout: 15))
-        if let label {
-            let predicate = NSPredicate(format: "label == %@", "Photo with \(label)")
-            expectation(for: predicate, evaluatedWith: canvas)
-            waitForExpectations(timeout: 5)
-            // The label changes as soon as a look is picked; give the preview a moment to render.
-            Thread.sleep(forTimeInterval: 0.8)
-        }
+        // The label changes as soon as a look is picked; the value turns "ready" once its preview has rendered.
+        let format = label == nil ? "value == 'ready'" : "label == %@ AND value == 'ready'"
+        let predicate = NSPredicate(format: format, argumentArray: label.map { ["Photo with \($0)"] } ?? [])
+        expectation(for: predicate, evaluatedWith: canvas)
+        waitForExpectations(timeout: 20)
         return canvas
     }
 
@@ -103,7 +101,9 @@ final class GradeUITests: XCTestCase {
         _ = waitForCanvas(app, label: "Teal & Orange")
         app.buttons["Adjust"].tap()
 
-        app.buttons["adjust-grain"].tap()
+        let grain = app.buttons["adjust-grain"]
+        scrollIntoView(grain, in: app)
+        grain.tap()
         let slider = app.sliders["adjustSlider"]
         XCTAssertTrue(slider.waitForExistence(timeout: 5))
         slider.adjust(toNormalizedSliderPosition: 0.8)
