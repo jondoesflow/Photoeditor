@@ -12,14 +12,14 @@ This file covers what was tested, how it was tested, and what could not be verif
 
 Each run pushes its raw evidence to the `ci-reports` branch: `build-summary.md`, `test-summary.json`, `tests.json`, `screenshots/` (UI-test screenshots and screen recordings) and the full `xcodebuild.log.gz`.
 
-## Result of the last full run (commit `80fe175`)
+## Result of the last full run (commit `e951af0`)
 
 | Check | Result |
 |---|---|
 | Build | **Succeeded** |
 | Compiler errors | **0** |
 | Compiler warnings | **0** (Swift 6 language mode, strict concurrency `complete`) |
-| Tests | **58 of 58 passed**: 53 unit tests and 5 UI tests, with 0 skipped |
+| Tests | **107 passed, 0 failed**, plus 2 known issues: subject detection needs the Neural Engine, which the CI simulator lacks |
 
 ![Every preset on the demo photo](docs/preset-gallery.jpg)
 
@@ -62,19 +62,37 @@ Starts empty with nothing to save; loading the demo photo renders a preview (at 
 
 Orientation is reset to 1 (the pixels are already upright), in both the top-level and TIFF dictionaries; date, camera model and GPS location are kept; stale pixel sizes and Apple's maker note are dropped; photos with no metadata work.
 
+### Enhance (EnhanceChain, ImageStats, Autopilot, Upscaler, PhotoAnalyzer)
+
+- **Denoise** halves grain and colour speckle on synthetic noisy images without shifting brightness or colour.
+- **Dust** removes 2 px specks and leaves the surroundings alone. **Detail** raises edge contrast. **Light** brightens an underexposed photo using Apple's auto-adjust. **Colour** halves a cast, with gains limited so deliberate colour isn't flattened.
+- **Faces** brightens and smooths inside a face rectangle only. **Background blur** softens the background and leaves the subject unchanged. **Remove** makes the background transparent, and the cut-out keeps its transparency through PNG encoding.
+- Masks that cover almost nothing or almost everything are rejected as "no subject".
+- The noise estimator is within 20% at σ 3, 8 and 15. Smooth gradients aren't mistaken for noise, and fine detail scores sharper than broad detail.
+- Autopilot's choices are tested for clean, noisy, soft, dark, bright, colour-cast, portrait and small photos.
+- The **AI upscaler** (Real-ESRGAN in Core ML) gives the right size at 2× and 4× and keeps the colours. Tiles join without gaps or seams, it refuses output over 48 MP, and it produces crisper edges than plain resizing.
+- The analyser finds the face in the demo portrait and none in the car photo, and detects noise in a noisy photo.
+- Through the model: Autopilot turns on face enhancement for a portrait, enhancements reset for the next photo, 2× upscaling saves a photo twice the size, and the 4× limit is enforced.
+
+### Saving
+
+**Save as New Photo** adds a copy and leaves the library photo alone. **Replace Original** sends the edit to the library photo it came from, as HEIC. It isn't offered for photos that aren't from the library, and a failed replace reports why.
+
 ## UI tests (XCUITest, with screenshots)
 
 ![App screens from the UI tests](docs/app-screens.jpg)
 
 - **Empty state:** the first screen shows "Choose a photo", and Save is disabled
-- **Apply, compare and save:** opens the demo photo, applies Neon Nights, turns on before/after and drags the divider, then saves and sees "Saved to Photos"
+- **Apply, compare and save:** opens the demo photo, applies Neon Nights, turns on before/after and drags the divider, then uses the Save menu twice, choosing **Save as New Photo** and then **Replace Original**, and checks each confirmation
+- **Enhance gallery:** on the demo portrait, checks the analysis found a face, runs Autopilot, then turns each tool up to full and screenshots it, and checks the upscale size (1600 × 2400 → 3200 × 4800)
 - **Categories:** Black & White shows Noir and hides Neon Nights; All brings everything back
 - **Adjust and My Looks:** starts on Teal & Orange, adds grain, saves the look as "Holiday", then finds it under My Looks
 - **Preset gallery:** taps every preset and screenshots it. Each screenshot waits until the canvas reports that its preview matches the selected look.
 
 ## What could not be verified
 
-- **Saving to the real photo library.** UI tests run with `-GradeDemo`, which saves to memory, because the simulator's permission prompt can't be answered reliably in CI. The export itself (full-size HEIC with metadata) is unit-tested. The `PhotoLibrarySaver` code path (add-only authorisation, then `PHAssetCreationRequest`) has only been compiled, not run.
+- **Background removal on a real subject.** CI's simulator has no Neural Engine, so Apple's subject detection doesn't run there. The removal, blur and PNG steps are tested with a synthetic mask instead.
+- **Saving to the real photo library, including Replace Original.** UI tests run with `-GradeDemo`, which saves to memory, because the simulator's permission prompt can't be answered reliably in CI. The export itself (full-size HEIC with metadata) is unit-tested. The `PhotoLibrarySaver` code path (add-only authorisation, then `PHAssetCreationRequest`) has only been compiled, not run.
 - **The system photo picker.** It runs in a separate process that UI tests can't drive, so tests open the bundled demo photo instead.
 - **On-device performance.** The CI simulator renders on the CPU. On an iPhone, Core Image uses the GPU, so preview updates should be faster than in CI, but this hasn't been measured. Very large photos (48 MP, ProRAW) haven't been tried.
 - **Looks on your own photos.** The presets were tuned on one demo photo with a bright, overcast sky. Photos with more contrast, or that are already dark, will respond differently.
