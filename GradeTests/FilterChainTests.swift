@@ -161,6 +161,34 @@ struct FilterChainTests {
         }
     }
 
+    // Temporary: finds which Neon Nights setting brightens the corners.
+    @Test("Diagnose Neon Nights corners")
+    func neonCornerDiagnosis() throws {
+        let preset = try #require(PresetLibrary.loadBundled().preset(id: "neon-nights"))
+        let image = TestImages.solid(0.5, 0.5, 0.5, size: CGSize(width: 300, height: 200))
+        func cornerMinusCentre(_ recipe: Recipe) -> Double {
+            let bitmap = TestImages.render(recipe, on: image)
+            return bitmap.mean(CGRect(x: 0, y: 180, width: 20, height: 20)).brightness
+                - bitmap.mean(CGRect(x: 140, y: 90, width: 20, height: 20)).brightness
+        }
+        var lines = ["all: \(cornerMinusCentre(preset.recipe))"]
+        for parameter in Parameter.allCases where preset.recipe[parameter] != 0 {
+            var without = preset.recipe
+            without[parameter] = 0
+            lines.append("without \(parameter.rawValue): \(cornerMinusCentre(without))")
+        }
+        var noShadowTone = preset.recipe
+        noShadowTone.shadowTone = nil
+        lines.append("without shadowTone: \(cornerMinusCentre(noShadowTone))")
+        var noHighlightTone = preset.recipe
+        noHighlightTone.highlightTone = nil
+        lines.append("without highlightTone: \(cornerMinusCentre(noHighlightTone))")
+        lines.append("vignette only: \(cornerMinusCentre(.only(.vignette, 0.55)))")
+        lines.append("vignette+glow: \(cornerMinusCentre(Recipe([.vignette: 0.55, .glow: 0.6])))")
+        lines.append("vignette+exposure: \(cornerMinusCentre(Recipe([.vignette: 0.55, .exposure: -0.55])))")
+        Issue.record(Comment(rawValue: lines.joined(separator: " | ")))
+    }
+
     @Test("Grain is centred: it doesn't change a preset's overall brightness")
     func grainIsNeutralInPresets() {
         let image = TestImages.gradient()

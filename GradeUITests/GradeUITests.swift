@@ -35,17 +35,18 @@ final class GradeUITests: XCTestCase {
         return canvas
     }
 
-    /// Drags a horizontal strip until the element is on screen.
+    /// Drags a horizontal strip until the element is fully on screen. (`isHittable` can't be asked of
+    /// an element that is off screen, so this goes by its frame.)
     @MainActor
     private func scrollIntoView(_ element: XCUIElement, in app: XCUIApplication) {
         let screen = app.windows.firstMatch.frame
-        var attempts = 0
-        while !element.isHittable && attempts < 8 {
+        for _ in 0..<10 {
+            let frame = element.frame
+            guard frame.minX < screen.minX + 8 || frame.maxX > screen.maxX - 8 else { return }
             let strip = app.scrollViews.containing(.button, identifier: element.identifier).firstMatch
             let start = strip.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
-            let distance: CGFloat = element.frame.midX > screen.midX ? -220 : 220
+            let distance: CGFloat = frame.midX > screen.midX ? -200 : 200
             start.press(forDuration: 0.05, thenDragTo: start.withOffset(CGVector(dx: distance, dy: 0)))
-            attempts += 1
         }
     }
 

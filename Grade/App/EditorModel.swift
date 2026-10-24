@@ -31,6 +31,8 @@ final class EditorModel {
     private(set) var edited: RenderedImage?
     /// The recipe `edited` was rendered with.
     private(set) var editedRecipe: Recipe?
+    /// Why the latest preview render failed, if it did.
+    private(set) var renderFailure: String?
     private(set) var thumbnails: [String: RenderedImage] = [:]
     private(set) var selectedPresetID: String?
     private(set) var intensity: Double = 1
@@ -211,10 +213,18 @@ final class EditorModel {
         let generation = renderGeneration
         let recipe = recipe
         renderTask = Task {
-            guard let image = try? await renderer.renderPreview(recipe),
-                  !Task.isCancelled, generation == renderGeneration else { return }
-            edited = image
-            editedRecipe = recipe
+            do {
+                let image = try await renderer.renderPreview(recipe)
+                guard !Task.isCancelled, generation == renderGeneration else { return }
+                edited = image
+                editedRecipe = recipe
+                renderFailure = nil
+            } catch is CancellationError {
+                // A newer render replaced this one.
+            } catch {
+                guard generation == renderGeneration else { return }
+                renderFailure = String(describing: error)
+            }
         }
     }
 

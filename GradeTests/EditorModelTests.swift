@@ -63,6 +63,16 @@ struct EditorModelTests {
         #expect(model.edited != before)
     }
 
+    @Test("Every preset renders a full-size preview")
+    func everyPresetPreviews() async throws {
+        let model = try await loadedModel()
+        for preset in model.library.presets {
+            model.selectPreset(preset.id)
+            await model.waitForRender()
+            #expect(model.isPreviewCurrent, "\(preset.id) preview didn't render: \(model.renderFailure ?? "no error")")
+        }
+    }
+
     @Test("Strength scales the preset; adjustments add on top; reset clears everything")
     func strengthAndAdjustments() async throws {
         let model = try await loadedModel()
