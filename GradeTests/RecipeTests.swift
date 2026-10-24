@@ -76,10 +76,24 @@ struct RecipeTests {
         #expect(throws: DecodingError.self) { try JSONDecoder().decode(Recipe.self, from: json) }
     }
 
-    @Test("Hex colours parse", arguments: [("#FF8000", 1.0, 128.0 / 255, 0.0), ("0b5c66", 11.0 / 255, 92.0 / 255, 102.0 / 255)])
-    func hex(input: String, red: Double, green: Double, blue: Double) throws {
-        let color = try #require(RGBColor(hex: input))
-        #expect(abs(color.red - red) < 1e-9 && abs(color.green - green) < 1e-9 && abs(color.blue - blue) < 1e-9)
+    struct HexCase: Sendable, CustomTestStringConvertible {
+        let input: String
+        let bytes: [Double]
+        var testDescription: String { input }
+    }
+
+    static let hexCases: [HexCase] = [
+        HexCase(input: "#FF8000", bytes: [255, 128, 0]),
+        HexCase(input: "0b5c66", bytes: [11, 92, 102]),
+    ]
+
+    @Test("Hex colours parse", arguments: hexCases)
+    func hex(_ testCase: HexCase) throws {
+        let color = try #require(RGBColor(hex: testCase.input))
+        let channels = [color.red, color.green, color.blue].map { $0 * 255 }
+        for (channel, expected) in zip(channels, testCase.bytes) {
+            #expect(abs(channel - expected) < 1e-9)
+        }
     }
 
     @Test("Bad hex colours are rejected", arguments: ["", "#FFF", "#GGGGGG", "#1234567"])
