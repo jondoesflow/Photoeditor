@@ -1,8 +1,10 @@
+import CoreGraphics
 import Foundation
 import Observation
 
-/// Editor state: the loaded photo, the chosen look, manual adjustments and saving.
-/// The current look is always `preset × intensity + adjustments`; the original is never changed.
+/// Editor state: the loaded photo, its enhancements, the chosen look, manual adjustments and saving.
+/// The photo is enhanced first, then the look (`preset × intensity + adjustments`) is applied on top;
+/// the original is never changed.
 @MainActor
 @Observable
 final class EditorModel {
@@ -31,12 +33,22 @@ final class EditorModel {
     private(set) var edited: RenderedImage?
     /// The recipe `edited` was rendered with.
     private(set) var editedRecipe: Recipe?
+    /// The enhancement `edited` was rendered with (upscaling excluded: it only happens when saving).
+    private(set) var editedEnhancement: Enhancement?
     /// Why the latest preview render failed, if it did.
     private(set) var renderFailure: String?
     private(set) var thumbnails: [String: RenderedImage] = [:]
     private(set) var selectedPresetID: String?
     private(set) var intensity: Double = 1
     private(set) var adjustments = Recipe.neutral
+    /// Repairs and improvements for this photo. Reset when another photo opens.
+    private(set) var enhancement = Enhancement.none
+    /// What the analysis found in the current photo.
+    private(set) var insights = PhotoInsights.empty
+    /// 0…1 while an upscaled photo is being saved.
+    private(set) var exportProgress: Double?
+    /// The size of the last saved photo, shown in the confirmation.
+    private(set) var lastSavedSize: CGSize?
     private(set) var saveState: SaveState = .idle
     /// Increments on every successful save; drives the haptic.
     private(set) var saveCount = 0
@@ -78,32 +90,56 @@ final class EditorModel {
         (selectedPreset?.recipe.scaled(by: intensity) ?? .neutral).adding(adjustments)
     }
 
-    var hasEdits: Bool { !recipe.isNeutral }
+    var hasEdits: Bool { !recipe.isNeutral || !enhancement.isNeutral }
 
     /// False while a newer preview is still rendering.
-    var isPreviewCurrent: Bool { edited != nil && editedRecipe == recipe }
+    var isPreviewCurrent: Bool {
+        edited != nil && editedRecipe == recipe && editedEnhancement == previewEnhancement
+    }
+
+    /// Whether a tool can do anything for this photo (faces need a face, background needs a subject).
+    func isAvailable(_ tool: EnhanceTool) -> Bool {
+        switch tool {
+        case .faces: insights.faceCount > 0
+        case .background: insights.hasSubject
+        case .upscale: UpscaleFactor.double.isAvailable(for: insights.pixelSize)
+        default: true
+        }
+    }
+
+    /// The enhancement as the preview shows it: everything except upscaling.
+    private var previewEnhancement: Enhancement {
+        var preview = enhancement
+        preview.upscale = .none
+        return preview
+    }
 
     var canSave: Bool { phase == .editing && saveState != .saving }
 
     // MARK: - Loading
 
-    /// Opens a new photo, keeping the current look so it can be applied to a series of shots.
+    /// Opens and analyses a new photo, keeping the current look so it can be applied to a series of
+    /// shots. Enhancements are specific to a photo, so they start again.
     func load(_ data: Data) async {
         renderTask?.cancel()
         phase = .loading
         saveState = .idle
+        enhancement = .none
         do {
-            try await renderer.load(data)
+            insights = try await renderer.load(data)
             original = try await renderer.renderPreview(.neutral)
             let recipe = recipe
             edited = try await renderer.renderPreview(recipe)
             editedRecipe = recipe
+            editedEnhancement = previewEnhancement
             phase = .editing
             await refreshThumbnails()
         } catch {
             original = nil
             edited = nil
             editedRecipe = nil
+            editedEnhancement = nil
+            insights = .empty
             thumbnails = [:]
             phase = .failed(RenderError.unreadableImage.localizedDescription)
         }
@@ -143,8 +179,41 @@ final class EditorModel {
         selectedPresetID = nil
         intensity = 1
         adjustments = .neutral
+        enhancement = .none
         scheduleRender()
     }
+
+    // MARK: - Enhance
+
+    func setEnhancement(_ tool: EnhanceTool, to value: Double) {
+        enhancement[tool] = value
+        scheduleRender()
+    }
+
+    func setBackground(_ mode: Enhancement.Background) {
+        guard mode == .keep || insights.hasSubject else { return }
+        enhancement.background = mode
+        scheduleRender()
+    }
+
+    func setUpscale(_ factor: UpscaleFactor) {
+        guard factor.isAvailable(for: insights.pixelSize) else { return }
+        enhancement.upscale = factor
+    }
+
+    /// Sets every tool to what the analysis suggests, leaving the background choice alone.
+    func runAutopilot() {
+        enhancement = Autopilot.recommend(for: insights, keeping: enhancement)
+        scheduleRender()
+    }
+
+    func resetEnhancement() {
+        enhancement = .none
+        scheduleRender()
+    }
+
+    /// The size the saved photo will be.
+    var outputSize: CGSize { enhancement.upscale.outputSize(for: insights.pixelSize) }
 
     // MARK: - My Looks
 
@@ -183,9 +252,16 @@ final class EditorModel {
     func save() async {
         guard canSave else { return }
         saveState = .saving
+        exportProgress = enhancement.upscale == .none ? nil : 0
+        defer { exportProgress = nil }
         do {
-            let data = try await renderer.export(recipe)
-            try await saver.save(data)
+            let export = try await renderer.export(recipe, enhancement: enhancement) { progress in
+                Task { @MainActor [weak self] in
+                    if self?.saveState == .saving { self?.exportProgress = progress }
+                }
+            }
+            try await saver.save(export.data)
+            lastSavedSize = export.pixelSize
             saveState = .saved
             saveCount += 1
         } catch {
@@ -212,12 +288,14 @@ final class EditorModel {
         renderGeneration += 1
         let generation = renderGeneration
         let recipe = recipe
+        let enhancement = previewEnhancement
         renderTask = Task {
             do {
-                let image = try await renderer.renderPreview(recipe)
+                let image = try await renderer.renderPreview(recipe, enhancement: enhancement)
                 guard !Task.isCancelled, generation == renderGeneration else { return }
                 edited = image
                 editedRecipe = recipe
+                editedEnhancement = enhancement
                 renderFailure = nil
             } catch is CancellationError {
                 // A newer render replaced this one.

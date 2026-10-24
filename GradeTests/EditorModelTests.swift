@@ -161,4 +161,93 @@ struct EditorModelTests {
         model.saveLook(named: "   ")
         #expect(model.looks.first?.name == "My Look 1")
     }
+
+    // MARK: - Enhance
+
+    private func portraitData() throws -> Data {
+        let url = try #require(Bundle.main.url(forResource: "DemoPortrait", withExtension: "jpg"))
+        return try Data(contentsOf: url)
+    }
+
+    @Test("Opening a portrait analyses it; Autopilot turns on face enhancement")
+    func autopilotOnPortrait() async throws {
+        let model = try makeModel()
+        await model.load(try portraitData())
+        #expect(model.insights.faceCount >= 1)
+        #expect(model.isAvailable(.faces))
+        model.runAutopilot()
+        await model.waitForRender()
+        #expect(model.enhancement.faces > 0)
+        #expect(model.enhancement.light > 0)
+        #expect(model.hasEdits)
+        #expect(model.isPreviewCurrent, "\(model.renderFailure ?? "no error")")
+    }
+
+    @Test("Enhancements re-render the preview and reset for the next photo")
+    func enhancementLifecycle() async throws {
+        let model = try await loadedModel()
+        let before = try #require(model.edited)
+        model.setEnhancement(.detail, to: 0.8)
+        await model.waitForRender()
+        #expect(model.isPreviewCurrent)
+        #expect(model.edited != before)
+        #expect(model.enhancement.isActive(.detail))
+        await model.load(try TestImages.demoPhotoData())
+        #expect(model.enhancement == .none)
+    }
+
+    @Test("Faces and background are unavailable without a face or subject")
+    func availability() async throws {
+        let model = try makeModel()
+        await model.load(TestImages.jpegData())
+        #expect(!model.isAvailable(.faces))
+        #expect(!model.isAvailable(.background))
+        model.setBackground(.remove)
+        #expect(model.enhancement.background == .keep)
+    }
+
+    @Test("Upscaling 2× saves a photo twice the size, with progress along the way")
+    func upscaledSave() async throws {
+        let saver = RecordingSaver()
+        let model = try makeModel(saver: saver)
+        await model.load(TestImages.jpegData(size: CGSize(width: 120, height: 80)))
+        model.setUpscale(.double)
+        #expect(model.outputSize == CGSize(width: 240, height: 160))
+        await model.save()
+        #expect(model.saveState == .saved, "\(model.saveState)")
+        #expect(model.lastSavedSize == CGSize(width: 240, height: 160))
+        #expect(model.exportProgress == nil)
+        let saved = try #require(await saver.saved.first)
+        #expect(try #require(CIImage(data: saved)).extent.size == CGSize(width: 240, height: 160))
+    }
+
+    @Test("Upscaling is refused when the result would be too large")
+    func upscaleRefused() async throws {
+        let model = try await loadedModel()
+        // The demo photo is 2000 × 1333: 2× fits in 48 MP, 4× doesn't.
+        model.setUpscale(.quadruple)
+        #expect(model.enhancement.upscale == .none)
+        model.setUpscale(.double)
+        #expect(model.enhancement.upscale == .double)
+    }
+
+    @Test("Removing the background saves a transparent PNG")
+    func transparentSave() async throws {
+        let saver = RecordingSaver()
+        let model = try makeModel(saver: saver)
+        await model.load(try portraitData())
+        withKnownIssue("Subject masks may be unavailable on the simulator", isIntermittent: true) {
+            try #require(model.insights.hasSubject)
+        }
+        guard model.insights.hasSubject else { return }
+        model.setBackground(.remove)
+        await model.waitForRender()
+        #expect(model.isPreviewCurrent, "\(model.renderFailure ?? "no error")")
+        await model.save()
+        let saved = try #require(await saver.saved.first)
+        // PNG signature.
+        #expect(Array(saved.prefix(4)) == [0x89, 0x50, 0x4E, 0x47])
+        let bitmap = TestImages.bitmap(try #require(CIImage(data: saved)).transformed(by: CGAffineTransform(scaleX: 0.1, y: 0.1)))
+        #expect(bitmap.alpha(x: 2, y: 2) < 0.5, "a corner of the portrait should be background")
+    }
 }

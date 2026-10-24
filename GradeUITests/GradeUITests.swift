@@ -31,7 +31,8 @@ final class GradeUITests: XCTestCase {
         let format = label == nil ? "value == 'ready'" : "label == %@ AND value == 'ready'"
         let predicate = NSPredicate(format: format, argumentArray: label.map { ["Photo with \($0)"] } ?? [])
         expectation(for: predicate, evaluatedWith: canvas)
-        waitForExpectations(timeout: 20)
+        // Generous: the CI simulator renders on the CPU, and some enhancements are heavy there.
+        waitForExpectations(timeout: 60)
         return canvas
     }
 
@@ -145,5 +146,62 @@ final class GradeUITests: XCTestCase {
             _ = waitForCanvas(app, label: name)
             screenshot(String(format: "gallery-%02d-%@", index, identifier), app)
         }
+    }
+
+    /// Autopilot and each Enhance tool on the demo portrait, one screenshot each.
+    @MainActor
+    func testEnhanceGallery() {
+        let app = launch(["-GradeDemo", "-GradeDemoPhoto", "portrait"])
+        _ = waitForCanvas(app)
+        app.buttons["Enhance"].tap()
+        let summary = app.staticTexts["insightsSummary"]
+        XCTAssertTrue(summary.waitForExistence(timeout: 5))
+        XCTAssertTrue(summary.label.contains("face"), "Analysis summary: \(summary.label)")
+
+        app.buttons["autopilotButton"].tap()
+        _ = waitForCanvas(app)
+        screenshot("enhance-00-autopilot", app)
+        app.buttons["resetEnhanceButton"].tap()
+        _ = waitForCanvas(app)
+
+        let sliderTools = ["light", "colour", "denoise", "detail", "faces", "dust"]
+        for (index, tool) in sliderTools.enumerated() {
+            let button = app.buttons["enhance-\(tool)"]
+            scrollIntoView(button, in: app)
+            button.tap()
+            let slider = app.sliders["enhanceSlider"]
+            XCTAssertTrue(slider.waitForExistence(timeout: 5), "\(tool) has no slider")
+            slider.adjust(toNormalizedSliderPosition: 1)
+            _ = waitForCanvas(app)
+            screenshot(String(format: "enhance-%02d-%@", index + 1, tool), app)
+            app.buttons["resetEnhanceButton"].tap()
+            _ = waitForCanvas(app)
+        }
+
+        let background = app.buttons["enhance-background"]
+        scrollIntoView(background, in: app)
+        background.tap()
+        let blur = app.buttons["Blur"]
+        if blur.waitForExistence(timeout: 3), blur.isEnabled {
+            blur.tap()
+            _ = waitForCanvas(app)
+            screenshot("enhance-07-background-blur", app)
+            app.buttons["Remove"].tap()
+            _ = waitForCanvas(app)
+            screenshot("enhance-08-background-remove", app)
+            app.buttons["Keep"].tap()
+            _ = waitForCanvas(app)
+        } else {
+            screenshot("enhance-07-background-unavailable", app)
+        }
+
+        let upscale = app.buttons["enhance-upscale"]
+        scrollIntoView(upscale, in: app)
+        upscale.tap()
+        app.buttons["2×"].tap()
+        let size = app.staticTexts["upscaleSize"]
+        XCTAssertTrue(size.waitForExistence(timeout: 5))
+        XCTAssertTrue(size.label.contains("3200 × 4800"), size.label)
+        screenshot("enhance-09-upscale", app)
     }
 }

@@ -31,10 +31,12 @@ targets:
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
         CODE_SIGN_STYLE: Automatic
         GENERATE_INFOPLIST_FILE: NO
+        # The upscaling model is loaded by URL, so Xcode needn't generate a Swift class for it.
+        COREML_CODEGEN_LANGUAGE: None
       configs:
-        # The demo photo is only for UI tests and screenshots; it never ships.
+        # The demo photos are only for UI tests and screenshots; they never ship.
         Release:
-          EXCLUDED_SOURCE_FILE_NAMES: DemoPhoto.jpg
+          EXCLUDED_SOURCE_FILE_NAMES: DemoPhoto.jpg DemoPortrait.jpg
     info:
       path: Grade/Info.plist
       properties:

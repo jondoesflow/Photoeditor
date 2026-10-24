@@ -16,7 +16,8 @@ struct GradeApp: App {
 
 /// Builds the model from bundled config, honouring launch arguments used by UI tests:
 /// `-GradeDemo` (opens the bundled demo photo; saves go to memory, not Photos),
-/// `-GradeEmpty` (with `-GradeDemo`, starts with no photo) and `-GradePreset <id>` (starts with that preset).
+/// `-GradeEmpty` (with `-GradeDemo`, starts with no photo), `-GradePreset <id>` (starts with that preset)
+/// and `-GradeDemoPhoto portrait` (opens the demo portrait instead of the car).
 @MainActor
 enum AppEnvironment {
     static func makeModel(arguments: [String] = ProcessInfo.processInfo.arguments) -> EditorModel {
@@ -37,12 +38,18 @@ enum AppEnvironment {
 
     static func loadDemoPhotoIfNeeded(into model: EditorModel, arguments: [String] = ProcessInfo.processInfo.arguments) async {
         guard arguments.contains("-GradeDemo"), !arguments.contains("-GradeEmpty"),
-              let url = Bundle.main.url(forResource: "DemoPhoto", withExtension: "jpg"),
+              let url = Bundle.main.url(forResource: demoPhotoName(arguments), withExtension: "jpg"),
               let data = try? Data(contentsOf: url) else { return }
         // Choose the preset first so the photo opens with it already applied.
         if let index = arguments.firstIndex(of: "-GradePreset"), arguments.indices.contains(index + 1) {
             model.selectPreset(arguments[index + 1])
         }
         await model.load(data)
+    }
+
+    private static func demoPhotoName(_ arguments: [String]) -> String {
+        guard let index = arguments.firstIndex(of: "-GradeDemoPhoto"), arguments.indices.contains(index + 1),
+              arguments[index + 1] == "portrait" else { return "DemoPhoto" }
+        return "DemoPortrait"
     }
 }

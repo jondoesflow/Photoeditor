@@ -40,6 +40,8 @@ struct CompareCanvas: View {
         Image(decorative: image.cgImage, scale: 1)
             .resizable()
             .interpolation(.high)
+            // Shows through where the background has been removed.
+            .background { Checkerboard() }
     }
 
     private func peekable(original: RenderedImage, edited: RenderedImage) -> some View {
@@ -94,5 +96,22 @@ struct CompareCanvas: View {
         }
         .frame(width: 44, height: height)
         .allowsHitTesting(false)
+    }
+}
+
+/// The usual grey checks that mark transparent areas.
+private struct Checkerboard: View {
+    var body: some View {
+        Canvas { context, size in
+            let square: CGFloat = 10
+            context.fill(Path(CGRect(origin: .zero, size: size)), with: .color(Color(white: 0.22)))
+            for row in 0..<Int((size.height / square).rounded(.up)) {
+                for column in 0..<Int((size.width / square).rounded(.up)) where (row + column).isMultiple(of: 2) {
+                    let rect = CGRect(x: CGFloat(column) * square, y: CGFloat(row) * square, width: square, height: square)
+                    context.fill(Path(rect), with: .color(Color(white: 0.32)))
+                }
+            }
+        }
+        .accessibilityHidden(true)
     }
 }

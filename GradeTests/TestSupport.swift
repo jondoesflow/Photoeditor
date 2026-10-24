@@ -25,6 +25,11 @@ struct Bitmap {
         return RGB(red: Double(bytes[index]) / 255, green: Double(bytes[index + 1]) / 255, blue: Double(bytes[index + 2]) / 255)
     }
 
+    /// Alpha, 0…1.
+    func alpha(x: Int, y: Int) -> Double {
+        Double(bytes[(y * width + x) * 4 + 3]) / 255
+    }
+
     /// Mean colour of a region (defaults to the whole image).
     func mean(_ rect: CGRect? = nil) -> RGB {
         let area = rect ?? CGRect(x: 0, y: 0, width: width, height: height)
@@ -74,6 +79,36 @@ enum TestImages {
         multiply.inputImage = hues.outputImage!.cropped(to: rect)
         multiply.backgroundImage = light.outputImage!.cropped(to: rect)
         return multiply.outputImage!.cropped(to: rect)
+    }
+
+    /// A flat colour with seeded random noise: `luma` adds the same value to every channel,
+    /// `chroma` adds a different value to each channel.
+    static func noisy(
+        _ red: Double, _ green: Double, _ blue: Double, luma: Double = 0, chroma: Double = 0,
+        size: CGSize = CGSize(width: 128, height: 128)
+    ) -> CIImage {
+        var state: UInt64 = 0x2545_F491_4F6C_DD1D
+        func random() -> Double {
+            state = state &* 6_364_136_223_846_793_005 &+ 1_442_695_040_888_963_407
+            return Double(state >> 33) / Double(1 << 31) - 0.5
+        }
+        let width = Int(size.width), height = Int(size.height)
+        var bytes = [UInt8](repeating: 255, count: width * height * 4)
+        for index in 0..<(width * height) {
+            let shared = random() * luma
+            for (channel, base) in [red, green, blue].enumerated() {
+                let value = base + shared + random() * chroma
+                bytes[index * 4 + channel] = UInt8((value * 255).rounded().clamped(to: 0...255))
+            }
+        }
+        return CIImage(
+            bitmapData: Data(bytes), bytesPerRow: width * 4, size: size, format: .RGBA8, colorSpace: sRGB
+        )
+    }
+
+    /// JPEG data for a small synthetic photo, for tests that go through the whole load and save path.
+    static func jpegData(size: CGSize = CGSize(width: 120, height: 80)) -> Data {
+        context.jpegRepresentation(of: gradient(size: size), colorSpace: sRGB, options: [:])!
     }
 
     static func bitmap(_ image: CIImage) -> Bitmap {

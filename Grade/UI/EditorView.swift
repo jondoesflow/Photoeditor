@@ -5,6 +5,7 @@ struct EditorView: View {
     enum Tool: String, CaseIterable, Identifiable {
         case presets = "Presets"
         case adjust = "Adjust"
+        case enhance = "Enhance"
 
         var id: String { rawValue }
     }
@@ -84,6 +85,7 @@ struct EditorView: View {
                 switch tool {
                 case .presets: PresetPanel()
                 case .adjust: AdjustPanel()
+                case .enhance: EnhancePanel()
                 }
             }
             .padding(.top, 14)
@@ -123,7 +125,13 @@ struct EditorView: View {
                 Task { await model.save() }
             } label: {
                 if model.saveState == .saving {
-                    ProgressView()
+                    if let progress = model.exportProgress {
+                        // Upscaling takes a while; show how far along it is.
+                        ProgressView(value: progress)
+                            .progressViewStyle(.circular)
+                    } else {
+                        ProgressView()
+                    }
                 } else {
                     Text("Save").fontWeight(.semibold)
                 }
@@ -137,7 +145,7 @@ struct EditorView: View {
     @ViewBuilder
     private var savedToast: some View {
         if model.saveState == .saved {
-            Label("Saved to Photos", systemImage: "checkmark.circle.fill")
+            Label(savedMessage, systemImage: "checkmark.circle.fill")
                 .font(.subheadline.weight(.semibold))
                 .padding(.horizontal, 16)
                 .padding(.vertical, 10)
@@ -150,6 +158,11 @@ struct EditorView: View {
                     withAnimation { model.dismissSaveState() }
                 }
         }
+    }
+
+    private var savedMessage: String {
+        guard let size = model.lastSavedSize else { return "Saved to Photos" }
+        return "Saved to Photos · \(Int(size.width)) × \(Int(size.height))"
     }
 
     private var saveFailedBinding: Binding<Bool> {
