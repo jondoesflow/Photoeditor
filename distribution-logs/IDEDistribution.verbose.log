@@ -1,0 +1,321 @@
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodTVOSAppStoreDistribution: 0x81b9eb280> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodAppStoreDistributionVisionOS: 0x81b9eb2d0> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodMacAppStoreDistribution: 0x81b9eb390> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Accepted distribution method <IDEDistributionMethodiOSAppStoreDistribution: 0x81b9eb3a0>
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodWatchOSAdHoc: 0x81b9eb2c0> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodMacAdHoc: 0x81b9eb2f0> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodTVOSAdHoc: 0x81b9eb320> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Accepted distribution method <IDEDistributionMethodiOSAdHoc: 0x81b9eb370>
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodAdHocVisionOS: 0x81b9eb210> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodTVOSEnterprise: 0x81b9eb200> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodWatchOSEnterprise: 0x81b9eb260> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodEnterpriseVisionOS: 0x81b9eb270> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Accepted distribution method <IDEDistributionMethodiOSEnterprise: 0x81b9eb380>
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodDevelopmentSignedVisionOS: 0x81b9eb230> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodWatchOSDevelopmentSigned: 0x81b9eb290> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodTVOSDevelopmentSigned: 0x81b9eb2e0> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Accepted distribution method <IDEDistributionMethodDevelopmentSigned: 0x81b9eb3b0>
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodDeveloperID: 0x81b9eb300> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodDeveloperIDNotarizedApp: 0x81b9eb3d0> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodSaveBuiltProducts: 0x81b9eb2a0> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodDevelopmentSignedMac: 0x81b9eb350> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodMacApplication: 0x81b9eb340> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodAppStoreValidationVisionOS: 0x81b9eb240> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodTVOSAppStoreValidation: 0x81b9eb310> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodMacAppStoreValidation: 0x81b9eb330> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodiOSAppStoreValidation: 0x81b9eb360> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodExportArchive: 0x81b9eb2b0> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodTVOSAppStoreDistribution: 0x81b9eb280> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodAppStoreDistributionVisionOS: 0x81b9eb2d0> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodMacAppStoreDistribution: 0x81b9eb390> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodiOSAppStoreDistribution: 0x81b9eb3a0> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodWatchOSAdHoc: 0x81b9eb2c0> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodMacAdHoc: 0x81b9eb2f0> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodTVOSAdHoc: 0x81b9eb320> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodiOSAdHoc: 0x81b9eb370> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodAdHocVisionOS: 0x81b9eb210> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodTVOSEnterprise: 0x81b9eb200> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodWatchOSEnterprise: 0x81b9eb260> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodEnterpriseVisionOS: 0x81b9eb270> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodiOSEnterprise: 0x81b9eb380> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodDevelopmentSignedVisionOS: 0x81b9eb230> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodWatchOSDevelopmentSigned: 0x81b9eb290> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodTVOSDevelopmentSigned: 0x81b9eb2e0> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodDevelopmentSigned: 0x81b9eb3b0> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodDeveloperID: 0x81b9eb300> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodDeveloperIDNotarizedApp: 0x81b9eb3d0> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodSaveBuiltProducts: 0x81b9eb2a0> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodDevelopmentSignedMac: 0x81b9eb350> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodMacApplication: 0x81b9eb340> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodAppStoreValidationVisionOS: 0x81b9eb240> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodTVOSAppStoreValidation: 0x81b9eb310> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodMacAppStoreValidation: 0x81b9eb330> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Accepted distribution method <IDEDistributionMethodiOSAppStoreValidation: 0x81b9eb360>
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodExportArchive: 0x81b9eb2b0> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Available distribution methods: {(
+    <IDEDistributionMethodiOSAppStoreDistribution: 0x81b9eb3a0>,
+    <IDEDistributionMethodiOSAdHoc: 0x81b9eb370>,
+    <IDEDistributionMethodiOSEnterprise: 0x81b9eb380>,
+    <IDEDistributionMethodDevelopmentSigned: 0x81b9eb3b0>,
+    <IDEDistributionMethodiOSAppStoreValidation: 0x81b9eb360>
+)}
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodTVOSAppStoreDistribution: 0x81b9eb280> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodAppStoreDistributionVisionOS: 0x81b9eb2d0> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodMacAppStoreDistribution: 0x81b9eb390> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Accepted distribution method <IDEDistributionMethodiOSAppStoreDistribution: 0x81b9eb3a0>
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodWatchOSAdHoc: 0x81b9eb2c0> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodMacAdHoc: 0x81b9eb2f0> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodTVOSAdHoc: 0x81b9eb320> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Accepted distribution method <IDEDistributionMethodiOSAdHoc: 0x81b9eb370>
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodAdHocVisionOS: 0x81b9eb210> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodTVOSEnterprise: 0x81b9eb200> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodWatchOSEnterprise: 0x81b9eb260> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodEnterpriseVisionOS: 0x81b9eb270> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Accepted distribution method <IDEDistributionMethodiOSEnterprise: 0x81b9eb380>
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodDevelopmentSignedVisionOS: 0x81b9eb230> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodWatchOSDevelopmentSigned: 0x81b9eb290> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodTVOSDevelopmentSigned: 0x81b9eb2e0> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Accepted distribution method <IDEDistributionMethodDevelopmentSigned: 0x81b9eb3b0>
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodDeveloperID: 0x81b9eb300> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodDeveloperIDNotarizedApp: 0x81b9eb3d0> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodSaveBuiltProducts: 0x81b9eb2a0> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodDevelopmentSignedMac: 0x81b9eb350> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodMacApplication: 0x81b9eb340> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodAppStoreValidationVisionOS: 0x81b9eb240> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodTVOSAppStoreValidation: 0x81b9eb310> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodMacAppStoreValidation: 0x81b9eb330> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodiOSAppStoreValidation: 0x81b9eb360> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodExportArchive: 0x81b9eb2b0> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodTVOSAppStoreDistribution: 0x81b9eb280> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodAppStoreDistributionVisionOS: 0x81b9eb2d0> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodMacAppStoreDistribution: 0x81b9eb390> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodiOSAppStoreDistribution: 0x81b9eb3a0> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodWatchOSAdHoc: 0x81b9eb2c0> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodMacAdHoc: 0x81b9eb2f0> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodTVOSAdHoc: 0x81b9eb320> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodiOSAdHoc: 0x81b9eb370> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodAdHocVisionOS: 0x81b9eb210> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodTVOSEnterprise: 0x81b9eb200> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodWatchOSEnterprise: 0x81b9eb260> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodEnterpriseVisionOS: 0x81b9eb270> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodiOSEnterprise: 0x81b9eb380> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodDevelopmentSignedVisionOS: 0x81b9eb230> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodWatchOSDevelopmentSigned: 0x81b9eb290> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodTVOSDevelopmentSigned: 0x81b9eb2e0> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodDevelopmentSigned: 0x81b9eb3b0> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodDeveloperID: 0x81b9eb300> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodDeveloperIDNotarizedApp: 0x81b9eb3d0> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodSaveBuiltProducts: 0x81b9eb2a0> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodDevelopmentSignedMac: 0x81b9eb350> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodMacApplication: 0x81b9eb340> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodAppStoreValidationVisionOS: 0x81b9eb240> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodTVOSAppStoreValidation: 0x81b9eb310> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodMacAppStoreValidation: 0x81b9eb330> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Accepted distribution method <IDEDistributionMethodiOSAppStoreValidation: 0x81b9eb360>
+2026-10-24 10:36:45 +0000 [MT] Rejected distribution method <IDEDistributionMethodExportArchive: 0x81b9eb2b0> because it doesn't support distributing archive
+2026-10-24 10:36:45 +0000 [MT] Available distribution methods: {(
+    <IDEDistributionMethodiOSAppStoreDistribution: 0x81b9eb3a0>,
+    <IDEDistributionMethodiOSAdHoc: 0x81b9eb370>,
+    <IDEDistributionMethodiOSEnterprise: 0x81b9eb380>,
+    <IDEDistributionMethodDevelopmentSigned: 0x81b9eb3b0>,
+    <IDEDistributionMethodiOSAppStoreValidation: 0x81b9eb360>
+)}
+2026-10-24 10:36:45 +0000 [MT] IDEDistributionItem init <DVTFilePath:0x81bb1d8c0:'/Users/runner/work/Photoeditor/Photoeditor/build/Grade.xcarchive/Products/Applications/Grade.app'>
+2026-10-24 10:36:45 +0000 [MT] Set distributionItems on context: (
+    "<IDEDistributionItem: 0x81bb1f900; bundleID='com.jondoesflow.grade', path='<DVTFilePath:0x81bb1d8c0:'/Users/runner/work/Photoeditor/Photoeditor/build/Grade.xcarchive/Products/Applications/Grade.app'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x81bb1f8a0; isSigned='0', isAdHocSigned='0', signingCertificate='(null)', entitlements='(null)', teamID='(null)', identifier='(null)', executablePath='(null)', hardenedRuntime='0'>'>"
+)
+2026-10-24 10:36:45 +0000 [MT] Archs to thin for item /Users/runner/work/Photoeditor/Photoeditor/build/Grade.xcarchive/Products/Applications/Grade.app are []
+2026-10-24 10:36:45 +0000 [MT] Distributable's provisioning style is Automatic
+2026-10-24 10:36:45 +0000  App Store Connect request for store configuration response: <DVTITunesConnectConfigurationResponse: 0x81bc4d440; isSuccessful='1', configuration='{
+    T4L5PKA878 =     {
+        "com.apple.platform.appletvos" =         {
+            architectures =             {
+                defaultArch =                 {
+                    defaultProductType =                     {
+                        format =                         {
+                            bitCode =                             {
+                                supportLevel = unsupported;
+                            };
+                            compiledCode =                             {
+                                supportLevel = required;
+                            };
+                        };
+                    };
+                };
+            };
+            iconSource =             {
+                largeAppIcon = carInBinary;
+                primaryIcons = carInBinary;
+            };
+        };
+        "com.apple.platform.iphoneos" =         {
+            architectures =             {
+                defaultArch =                 {
+                    defaultProductType =                     {
+                        format =                         {
+                            bitCode =                             {
+                                supportLevel = unsupported;
+                            };
+                            compiledCode =                             {
+                                supportLevel = required;
+                            };
+                        };
+                    };
+                };
+            };
+            iconSource =             {
+                largeAppIcon = unsupported;
+                primaryIcons = pngInBinary;
+            };
+        };
+        "com.apple.platform.macosx" =         {
+            architectures =             {
+                defaultArch =                 {
+                    defaultProductType =                     {
+                        format =                         {
+                            bitCode =                             {
+                                supportLevel = unsupported;
+                            };
+                            compiledCode =                             {
+                                supportLevel = required;
+                            };
+                        };
+                    };
+                };
+            };
+            iconSource =             {
+                largeAppIcon = pngInBinary;
+                primaryIcons = pngInBinary;
+            };
+        };
+        "com.apple.platform.watchos" =         {
+            architectures =             {
+                defaultArch =                 {
+                    defaultProductType =                     {
+                        format =                         {
+                            bitCode =                             {
+                                supportLevel = unsupported;
+                            };
+                            compiledCode =                             {
+                                supportLevel = required;
+                            };
+                        };
+                    };
+                };
+            };
+            iconSource =             {
+                largeAppIcon = unsupported;
+                primaryIcons = pngInBinary;
+            };
+        };
+        "com.apple.platform.xros" =         {
+            architectures =             {
+                defaultArch =                 {
+                    defaultProductType =                     {
+                        format =                         {
+                            bitCode =                             {
+                                supportLevel = unsupported;
+                            };
+                            compiledCode =                             {
+                                supportLevel = required;
+                            };
+                        };
+                    };
+                };
+            };
+            iconSource =             {
+                largeAppIcon = carInBinary;
+                primaryIcons = carInBinary;
+            };
+        };
+        configModelVersion = "2.0";
+    };
+    preflight =     (
+        T4L5PKA878
+    );
+}', alertMessage='(null)', errors='(null)', warnings='(null)', infoMessages='(null)'>
+2026-10-24 10:36:45 +0000  App Store Connect team IDs for account API Key <identifier: 255F3VGRQY; issuer: 42fbaf30-a6ab-44fc-a1d8-43a4c8f531b6> are (
+    T4L5PKA878
+)
+2026-10-24 10:36:46 +0000 [MT] Skipping push notification registration because context lacks a device token or push notifications are disabled.
+2026-10-24 10:36:46 +0000 [MT] Starting evaluation for distribution items:
+(
+    "<IDEDistributionItem: 0x81bb1f900; bundleID='com.jondoesflow.grade', path='<DVTFilePath:0x81bb1d8c0:'/Users/runner/work/Photoeditor/Photoeditor/build/Grade.xcarchive/Products/Applications/Grade.app'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x81bb1f8a0; isSigned='0', isAdHocSigned='0', signingCertificate='(null)', entitlements='(null)', teamID='(null)', identifier='(null)', executablePath='(null)', hardenedRuntime='0'>'>"
+)
+2026-10-24 10:36:46 +0000 [MT] Evaluating <IDEDistributionItemProvisionable: 0x819c56500; distributionItem='<IDEDistributionItem: 0x81bb1f900; bundleID='com.jondoesflow.grade', path='<DVTFilePath:0x81bb1d8c0:'/Users/runner/work/Photoeditor/Photoeditor/build/Grade.xcarchive/Products/Applications/Grade.app'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x81bb1f8a0; isSigned='0', isAdHocSigned='0', signingCertificate='(null)', entitlements='(null)', teamID='(null)', identifier='(null)', executablePath='(null)', hardenedRuntime='0'>'>', team='<IDEProvisioningBasicTeam: 0x81bb80100; teamID='T4L5PKA878', teamName='(null)'>', method='<IDEDistributionMethodiOSAppStoreDistribution: 0x81b9eb3a0>', provisioningStyle='0', entitlementsProcessors='(
+    "<IDEiCloudEntitlementsProcessor: 0x81bcaea30>",
+    "<IDEAppAttestEnvironmentEntitlementsProcessor: 0x81bcae640>",
+    "<IDEClassKitEntitlementsProcessor: 0x81bcae580>",
+    "<IDEAppIdentifierPrefixedEntitlementsProcessor: 0x81bcae460>"
+)'> with overrides <IDEProvisionableOverrides 0x81a2480c0: configuration: Default, profileSupport: <IDEProvisioningProfileSupport: 0x81b9ebdf0>, provisioningStyle: (null), certificateSigningStyle: (null), provisioningPurpose: app-store, team: (null), platform: <DVTPlatform:0x81ad12900:'com.apple.platform.iphoneos':<DVTFilePath:0x81b0788c0:'/Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneOS.platform'>>, sdk: (null), sdkVariant: (null), profileSpecifier: (null), certificateIdentifier: (null), bundleIdentifier: (null), entitlements: (null), entitlementsFile: (null), baseEntitlements: (null), entitlementsExpansion: (null), entitlementsDestination: (null), allowSigningWithoutTeamSelection: (null), signingRequiresTeam: (null), appIDFeatures: (null)>
+2026-10-24 10:36:46 +0000 [MT] Applying entitlements delta for <IDEDistributionItem: 0x81bb1f900; bundleID='com.jondoesflow.grade', path='<DVTFilePath:0x81bb1d8c0:'/Users/runner/work/Photoeditor/Photoeditor/build/Grade.xcarchive/Products/Applications/Grade.app'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x81bb1f8a0; isSigned='0', isAdHocSigned='0', signingCertificate='(null)', entitlements='(null)', teamID='(null)', identifier='(null)', executablePath='(null)', hardenedRuntime='0'>'> from <IDEiCloudEntitlementsProcessor: 0x81bcaea30>: {
+}
+2026-10-24 10:36:46 +0000 [MT] Applying entitlements delta for <IDEDistributionItem: 0x81bb1f900; bundleID='com.jondoesflow.grade', path='<DVTFilePath:0x81bb1d8c0:'/Users/runner/work/Photoeditor/Photoeditor/build/Grade.xcarchive/Products/Applications/Grade.app'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x81bb1f8a0; isSigned='0', isAdHocSigned='0', signingCertificate='(null)', entitlements='(null)', teamID='(null)', identifier='(null)', executablePath='(null)', hardenedRuntime='0'>'> from <IDEAppAttestEnvironmentEntitlementsProcessor: 0x81bcae640>: {
+}
+2026-10-24 10:36:46 +0000 [MT] Applying entitlements delta for <IDEDistributionItem: 0x81bb1f900; bundleID='com.jondoesflow.grade', path='<DVTFilePath:0x81bb1d8c0:'/Users/runner/work/Photoeditor/Photoeditor/build/Grade.xcarchive/Products/Applications/Grade.app'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x81bb1f8a0; isSigned='0', isAdHocSigned='0', signingCertificate='(null)', entitlements='(null)', teamID='(null)', identifier='(null)', executablePath='(null)', hardenedRuntime='0'>'> from <IDEClassKitEntitlementsProcessor: 0x81bcae580>: {
+}
+2026-10-24 10:36:46 +0000 [MT] Applying entitlements delta for <IDEDistributionItem: 0x81bb1f900; bundleID='com.jondoesflow.grade', path='<DVTFilePath:0x81bb1d8c0:'/Users/runner/work/Photoeditor/Photoeditor/build/Grade.xcarchive/Products/Applications/Grade.app'>', codeSigningInfo='<_DVTCodeSigningInformation_Path: 0x81bb1f8a0; isSigned='0', isAdHocSigned='0', signingCertificate='(null)', entitlements='(null)', teamID='(null)', identifier='(null)', executablePath='(null)', hardenedRuntime='0'>'> from <IDEAppIdentifierPrefixedEntitlementsProcessor: 0x81bcae460>: {
+}
+2026-10-24 10:36:56 +0000 [MT] Evaluation for Grade.app is <IDEProvisionableStatusEvaluation 0x81bee0c40: inputs: <IDEProvisionableStatusEvalutorInputs 0x81be459a0: provisionableSnapshot: <IDEProvisionableSnapshot 0x81bbeb390: name: Grade.app, configurations: {
+    Default = "<_IDEProvisionableConfigurationSnapshot 0x81b07d9a0: name: Default, provisioningStyle: 0, certificateSigningStyle: 2, team: <IDEProvisioningBasicTeam: 0x81bb80100; teamID='T4L5PKA878', teamName='(null)'>, profileSupport: <IDEProvisioningProfileSupport: 0x81bdc0300>, platform: <DVTPlatform:0x81ad12900:'com.apple.platform.iphoneos':<DVTFilePath:0x81b0788c0:'/Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneOS.platform'>>, sdk: (null), sdkVariant: (null), bundleIdentifier: com.jondoesflow.grade, profileSpecifier: (null), certificateIdentifier: iPhone Distribution, entitlementsFilePath: (null), baseEntitlements: <IDEProvisionableEntitlements: 0x81bb82bc0; signedEntitlements='{\n}', simulatedEntitlements='(null)'>, entitlementsExpansion: <IDEDistributionProvisioningEntitlementsExpansion: 0x81bdc0680>, entitlementsDestination: 1, allowSigningWithoutTeamSelection: 0, signingRequiresTeam: 0, appIDFeatures: <DVTPortalAppIDFeatures 0x81be50b80: Features: {\n}, Containers: {\n}>, provisioningPurpose: app-store, supportsIOSMac: 0, areFeaturesUpToDate: 0>";
+}, overrides: <IDEProvisionableOverrides 0x81a2480c0: configuration: Default, profileSupport: <IDEProvisioningProfileSupport: 0x81b9ebdf0>, provisioningStyle: (null), certificateSigningStyle: (null), provisioningPurpose: app-store, team: (null), platform: <DVTPlatform:0x81ad12900:'com.apple.platform.iphoneos':<DVTFilePath:0x81b0788c0:'/Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneOS.platform'>>, sdk: (null), sdkVariant: (null), profileSpecifier: (null), certificateIdentifier: (null), bundleIdentifier: (null), entitlements: (null), entitlementsFile: (null), baseEntitlements: (null), entitlementsExpansion: (null), entitlementsDestination: (null), allowSigningWithoutTeamSelection: (null), signingRequiresTeam: (null), appIDFeatures: (null)>>>, configuration: Default, codesignParameterSnapshot: <IDECodesignParameterSnapshot: 0x81be85020>:
+Profile:  <DVTEmbeddedProvisioningProfile 0x81a248540: name: iOS Team Store Provisioning Profile: com.jondoesflow.grade, UUID: be4d583c-f681-4df6-a984-969b4d7a2bea, teamName: Jonathan Russell, teamIdentifierPrefixes: (
+    T4L5PKA878
+), entitlements: {
+    "application-identifier" = "T4L5PKA878.com.jondoesflow.grade";
+    "beta-reports-active" = 1;
+    "com.apple.developer.team-identifier" = T4L5PKA878;
+    "get-task-allow" = 0;
+    "keychain-access-groups" =     (
+        "T4L5PKA878.*",
+        "com.apple.token"
+    );
+}, appIdentifierName: Grade, applicationIdentifierPrefixes: (
+    T4L5PKA878
+), dateCreated: 2026-10-24 10:36:55 +0000, dateExpired: 2027-10-19 18:55:47 +0000, certificateKinds: {(
+    "1.2.840.113635.100.6.1.7",
+    "1.2.840.113635.100.6.1.4"
+)}, certificateSHA1Hashes: {(
+    CCE2C6055D97D79B44B69744637619672B7A904A,
+    DA535273C4D8FD3E72FA62D9A0239BF0C2D66249
+)}, supportedUDIDs: {(
+)}, isUniversal: 0, isXcodeManaged: 1, platforms: {(
+    <DVTPlatform:0x81ad12a00:'com.apple.platform.xros':<DVTFilePath:0x81b021bc0:'/Applications/Xcode_26.6.app/Contents/Developer/Platforms/XROS.platform'>>,
+    <DVTPlatform:0x81ad12980:'com.apple.platform.watchos':<DVTFilePath:0x81b0789a0:'/Applications/Xcode_26.6.app/Contents/Developer/Platforms/WatchOS.platform'>>,
+    <DVTPlatform:0x81ad12900:'com.apple.platform.iphoneos':<DVTFilePath:0x81b0788c0:'/Applications/Xcode_26.6.app/Contents/Developer/Platforms/iPhoneOS.platform'>>
+)}, filePath: <DVTFilePath:0x81b07e260:'/Users/runner/Library/Developer/Xcode/UserData/Provisioning Profiles/be4d583c-f681-4df6-a984-969b4d7a2bea.mobileprovision'>>
+Identity: CCE2C6055D97D79B44B69744637619672B7A904A
+Certificate <DVTSigningCertificate: 0x81a248840; name='Apple Distribution: Jonathan Russell (T4L5PKA878)', hash='CCE2C6055D97D79B44B69744637619672B7A904A', serialNumber='B5FA726A2052AB54345A29E282B99D8', certificateKinds='(
+    "1.2.840.113635.100.6.1.7",
+    "1.2.840.113635.100.6.1.4"
+), issueDate='2026-10-19 18:55:48 +0000''>>, errors: (null)>
+2026-10-24 10:36:57 +0000 [MT] Skipping push notification registration because context lacks a device token.
+2026-10-24 10:36:57 +0000 [MT] Uploading Grade with device token (null)
+2026-10-24 10:36:57 +0000 [MT] Starting upload
+2026-10-24 10:36:58 +0000  Updated message: Making copy of ‘Grade.ipa’…, progress: 0.000000
+2026-10-24 10:36:58 +0000  Updated progress: 0.000000 (raw value: 0.000000)
+2026-10-24 10:36:58 +0000  Updated message: Preparing to upload ‘Grade.ipa’…, progress: 0.000000
+2026-10-24 10:37:15 +0000  Updated message: Analyzing package…, progress: 0.000000
+2026-10-24 10:37:16 +0000  Updated message: Sending analysis to App Store Connect…, progress: 0.000000
+2026-10-24 10:37:16 +0000  Updated message: Waiting for App Store Connect analysis response…, progress: 0.000000
+2026-10-24 10:37:18 +0000  Updated message: Waiting for App Store Connect analysis response…, progress: 0.000000
+2026-10-24 10:37:50 +0000  Updated message: Sending SPI analysis to App Store Connect…, progress: 0.000000
+2026-10-24 10:37:50 +0000  Updated message: Waiting for App Store Connect SPI analysis response…, progress: 0.000000
+2026-10-24 10:37:52 +0000  Updated message: Waiting for App Store Connect SPI analysis response…, progress: 0.000000
+2026-10-24 10:38:12 +0000  Updated message: Requesting upload instructions from App Store Connect…, progress: 0.000000
+2026-10-24 10:38:13 +0000  Updated message: Preparing file for upload to App Store Connect…, progress: 0.000000
+2026-10-24 10:38:13 +0000  Updated message: Preparing file for upload to App Store Connect…, progress: 0.000000
+2026-10-24 10:38:13 +0000  Updated message: Uploading to App Store Connect…, progress: 0.000000
+2026-10-24 10:38:13 +0000  Updated progress: 1.000000 (raw value: 1.000000)
+2026-10-24 10:38:13 +0000  Updated message: Uploading to App Store Connect…, progress: 1.000000
+2026-10-24 10:38:13 +0000  Updated message: Completing upload…, progress: 1.000000
+2026-10-24 10:38:14 +0000  Updated message: Waiting for package to begin processing…, progress: 1.000000
+2026-10-24 10:38:14 +0000  Updated message: Uploaded package is processing., progress: 1.000000
+2026-10-24 10:38:14 +0000  Updated message: Upload succeeded., progress: 1.000000
+2026-10-24 10:38:14 +0000 [MT] Distribution record info for archive: <IDEArchiveDistributionRecord: 0x81a24b300; task='2', distributionDestination='2', uploadDestination='1', teamID='T4L5PKA878', signingCertificateSHA1='CCE2C6055D97D79B44B69744637619672B7A904A', uniqueIdentifier='486b496a-6415-49b9-812b-2e0c62e1b6e6', packagePath='(null)', preparationEvent='<IDEArchiveDistributionEvent: 0x81bcc9f90; title='Prepared archive for uploading', shortTitle='Prepared', date='2026-10-24 10:36:45 +0000', errors='(
+)', warnings='(
+)', infoMessages='(
+)', state='2'>', uploadEvent='<IDEArchiveDistributionEvent: 0x81bccb200; title='Uploaded to Apple', shortTitle='Uploaded', date='2026-10-24 10:38:14 +0000', errors='(
+)', warnings='(
+)', infoMessages='(
+)', state='2'>', validationEvent='(null)', processingCompletedEvent='(null)'>
