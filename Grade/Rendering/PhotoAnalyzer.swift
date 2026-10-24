@@ -69,35 +69,40 @@ enum PhotoAnalyzer {
         let foreground = VNGenerateForegroundInstanceMaskRequest()
         if (try? handler.perform([foreground])) != nil,
            let observation = foreground.results?.first,
-           let buffer = try? observation.generateScaledMaskForImage(forInstances: observation.allInstances, from: handler) {
+           let buffer = try? observation.generateScaledMaskForImage(forInstances: observation.allInstances, from: handler),
+           isUsable(CIImage(cvPixelBuffer: buffer), context: context) {
             return CIImage(cvPixelBuffer: buffer)
         }
 
         let person = VNGeneratePersonSegmentationRequest()
         person.qualityLevel = .accurate
         if (try? handler.perform([person])) != nil, let buffer = person.results?.first?.pixelBuffer,
-           maskHasContent(buffer) {
+           isUsable(CIImage(cvPixelBuffer: buffer), context: context) {
             return CIImage(cvPixelBuffer: buffer)
         }
         return nil
     }
 
-    /// Person segmentation returns a mask even with nobody in the photo; treat a near-empty one as no subject.
-    private static func maskHasContent(_ buffer: CVPixelBuffer) -> Bool {
-        CVPixelBufferLockBaseAddress(buffer, .readOnly)
-        defer { CVPixelBufferUnlockBaseAddress(buffer, .readOnly) }
-        guard let base = CVPixelBufferGetBaseAddress(buffer),
-              CVPixelBufferGetPixelFormatType(buffer) == kCVPixelFormatType_OneComponent8 else { return true }
-        let width = CVPixelBufferGetWidth(buffer), height = CVPixelBufferGetHeight(buffer)
-        let rowBytes = CVPixelBufferGetBytesPerRow(buffer)
-        let pixels = base.assumingMemoryBound(to: UInt8.self)
-        var covered = 0
-        for y in stride(from: 0, to: height, by: 4) {
-            for x in stride(from: 0, to: width, by: 4) where pixels[y * rowBytes + x] > 128 {
-                covered += 1
+    /// A mask is only useful if it separates something: one covering almost none or almost all of the
+    /// frame (person segmentation with nobody in it, or a model that failed) counts as no subject.
+    static func isUsable(_ mask: CIImage, context: CIContext) -> Bool {
+        guard let coverage = coverage(of: mask, context: context) else { return false }
+        return (0.02...0.95).contains(coverage)
+    }
+
+    /// The fraction of the frame the mask covers (mean of its first channel).
+    static func coverage(of mask: CIImage, context: CIContext) -> Double? {
+        let average = CIFilter.areaAverage()
+        average.inputImage = mask
+        average.extent = mask.extent
+        guard let output = average.outputImage else { return nil }
+        var pixel = [Float](repeating: 0, count: 4)
+        pixel.withUnsafeMutableBytes { buffer in
+            if let base = buffer.baseAddress {
+                context.render(output, toBitmap: base, rowBytes: 16, bounds: CGRect(x: 0, y: 0, width: 1, height: 1), format: .RGBAf, colorSpace: nil)
             }
         }
-        return covered * 16 > width * height / 50
+        return Double(pixel[0])
     }
 
     // MARK: - Pixels

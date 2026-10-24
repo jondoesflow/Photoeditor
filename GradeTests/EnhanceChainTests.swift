@@ -166,6 +166,28 @@ struct EnhanceChainTests {
         #expect(bitmap.alpha(x: 180, y: 50) < 0.01)
     }
 
+    @Test("A cut-out survives PNG encoding with its transparency, as the app saves it")
+    func transparentPNG() throws {
+        let scene = stripedScene()
+        let mask = try #require(scene.context.scaledSubjectMask(for: scene.image.extent))
+        let cutout = EnhanceChain.removeBackground(scene.image, subjectMask: mask)
+        let space = try #require(CGColorSpace(name: CGColorSpace.displayP3))
+        let png = try #require(TestImages.context.pngRepresentation(of: cutout, format: .RGBA8, colorSpace: space))
+        let decoded = TestImages.bitmap(try #require(CIImage(data: png)))
+        #expect(decoded.width == 200 && decoded.height == 100)
+        #expect(decoded.alpha(x: 20, y: 50) > 0.99)
+        #expect(decoded.alpha(x: 180, y: 50) < 0.01)
+    }
+
+    @Test("Masks that separate nothing are rejected", arguments: [0.0, 0.3, 0.7, 1.0])
+    func maskUsability(level: Double) {
+        let usable = level > 0 && level < 1
+        let size = CGSize(width: 100, height: 100)
+        let covered = TestImages.solid(1, 1, 1, size: CGSize(width: 100 * level, height: 100))
+            .composited(over: TestImages.solid(0, 0, 0, size: size))
+        #expect(PhotoAnalyzer.isUsable(covered, context: TestImages.context) == usable)
+    }
+
     @Test("The subject mask stretches to any size, so the preview mask works for the full photo")
     func maskScaling() throws {
         let scene = stripedScene()
