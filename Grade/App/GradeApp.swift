@@ -39,9 +39,10 @@ enum AppEnvironment {
         guard arguments.contains("-GradeDemo"), !arguments.contains("-GradeEmpty"),
               let url = Bundle.main.url(forResource: "DemoPhoto", withExtension: "jpg"),
               let data = try? Data(contentsOf: url) else { return }
-        await model.load(data)
+        // Choose the preset first so the photo opens with it already applied.
         if let index = arguments.firstIndex(of: "-GradePreset"), arguments.indices.contains(index + 1) {
             model.selectPreset(arguments[index + 1])
         }
+        await model.load(data)
     }
 }

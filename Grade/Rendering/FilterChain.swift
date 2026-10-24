@@ -25,10 +25,12 @@ enum FilterChain {
             let filter = CIFilter.temperatureAndTint()
             filter.inputImage = image
             // Telling Core Image the light was bluer than it was warms the picture, and vice versa.
-            filter.neutral = CIVector(x: 6500 + recipe[.warmth] * 2500, y: -recipe[.tint] * 60)
+            filter.neutral = CIVector(x: 6500 + recipe[.warmth] * 2500, y: recipe[.tint] * 60)
             filter.targetNeutral = CIVector(x: 6500, y: 0)
             image = filter.outputImage ?? image
         }
+        // CIToneCurve converts to a perceptual curve space itself, so it runs on linear input.
+        image = toneCurve(image, recipe)
         if recipe[.glow] > 0 {
             image = glow(image, amount: recipe[.glow], unit: unit)
         }
@@ -36,7 +38,6 @@ enum FilterChain {
         // Perceptual (gamma-encoded) space: curves, colour and texture feel right to the eye here.
         if needsPerceptualStage(recipe) {
             image = image.applyingFilter("CILinearToSRGBToneCurve")
-            image = toneCurve(image, recipe)
             if recipe[.contrast] != 0 || recipe[.saturation] != 0 {
                 let filter = CIFilter.colorControls()
                 filter.inputImage = image
@@ -80,7 +81,7 @@ enum FilterChain {
     }
 
     private static func needsPerceptualStage(_ recipe: Recipe) -> Bool {
-        let perceptual: [Parameter] = [.highlights, .shadows, .fade, .contrast, .saturation, .vibrance, .skyDarken, .sharpen, .vignette, .grain]
+        let perceptual: [Parameter] = [.contrast, .saturation, .vibrance, .skyDarken, .sharpen, .vignette, .grain]
         return perceptual.contains { recipe[$0] != 0 }
             || (recipe.shadowTone?.strength ?? 0) > 0
             || (recipe.highlightTone?.strength ?? 0) > 0
@@ -111,15 +112,18 @@ enum FilterChain {
         return filter.outputImage ?? image
     }
 
-    /// Soft-light blends a colour into the shadows or highlights, weighted by brightness.
+    /// Pushes the shadows or highlights towards a colour without changing their brightness,
+    /// weighted by how dark or bright each pixel is.
     private static func splitTone(_ image: CIImage, tone: Tone, inHighlights: Bool) -> CIImage {
-        guard let rgb = tone.rgb, let color = stageColor(rgb.red, rgb.green, rgb.blue) else { return image }
+        guard let rgb = tone.rgb else { return image }
         let extent = image.extent
-        let wash = CIImage(color: color).cropped(to: extent)
-
-        let tinted = CIFilter.softLightBlendMode()
-        tinted.inputImage = wash
-        tinted.backgroundImage = image
+        let luma = 0.2126 * rgb.red + 0.7152 * rgb.green + 0.0722 * rgb.blue
+        let push = 0.8
+        let shift = CIFilter.colorMatrix()
+        shift.inputImage = image
+        shift.biasVector = CIVector(
+            x: CGFloat((rgb.red - luma) * push), y: CGFloat((rgb.green - luma) * push), z: CGFloat((rgb.blue - luma) * push), w: 0
+        )
 
         let luminance = CIFilter.colorControls()
         luminance.inputImage = image
@@ -130,20 +134,13 @@ enum FilterChain {
         if !inHighlights {
             mask = mask.applyingFilter("CIColorInvert")
         }
-        // Concentrate the wash at the ends of the range, then scale by strength.
-        let strength = CGFloat(tone.strength)
-        let shaped = CIFilter.colorMatrix()
-        shaped.inputImage = mask.applyingFilter("CIGammaAdjust", parameters: ["inputPower": 1.6])
-        shaped.rVector = CIVector(x: strength, y: 0, z: 0, w: 0)
-        shaped.gVector = CIVector(x: 0, y: strength, z: 0, w: 0)
-        shaped.bVector = CIVector(x: 0, y: 0, z: strength, w: 0)
-        shaped.aVector = CIVector(x: 0, y: 0, z: 0, w: 0)
-        shaped.biasVector = CIVector(x: 0, y: 0, z: 0, w: 1)
+        // Concentrate the push at the ends of the range, then scale by strength.
+        mask = scaled(mask.applyingFilter("CIGammaAdjust", parameters: ["inputPower": 1.6]), by: CGFloat(tone.strength))
 
         let blend = CIFilter.blendWithMask()
-        blend.inputImage = tinted.outputImage
+        blend.inputImage = shift.outputImage
         blend.backgroundImage = image
-        blend.maskImage = shaped.outputImage
+        blend.maskImage = mask
         return blend.outputImage?.cropped(to: extent) ?? image
     }
 
@@ -167,19 +164,11 @@ enum FilterChain {
         let halo = bright.clampedToExtent()
             .applyingGaussianBlur(sigma: Double(24 * unit))
             .cropped(to: extent)
-        let strength = CGFloat(amount * 1.4)
-        let scaled = CIFilter.colorMatrix()
-        scaled.inputImage = halo
-        scaled.rVector = CIVector(x: strength, y: 0, z: 0, w: 0)
-        scaled.gVector = CIVector(x: 0, y: strength, z: 0, w: 0)
-        scaled.bVector = CIVector(x: 0, y: 0, z: strength, w: 0)
-        scaled.aVector = CIVector(x: 0, y: 0, z: 0, w: 0)
-        scaled.biasVector = CIVector(x: 0, y: 0, z: 0, w: 0)
-
         let add = CIFilter.additionCompositing()
-        add.inputImage = scaled.outputImage
+        add.inputImage = scaled(halo, by: CGFloat(amount * 1.4))
         add.backgroundImage = image
-        return add.outputImage?.cropped(to: extent) ?? image
+        // Both layers are opaque, so the sum's alpha is 2; reset it before later filters unpremultiply.
+        return add.outputImage.map(opaque)?.cropped(to: extent) ?? image
     }
 
     /// A cool, dark gradient from the top: turns a flat daytime sky into a night one.
@@ -217,24 +206,44 @@ enum FilterChain {
         return multiply.outputImage ?? image
     }
 
-    /// Monochrome film grain, overlaid around mid-grey so it doesn't shift brightness.
+    /// Monochrome film grain: multiplies each pixel by noise averaging 1, so brightness is unchanged.
     private static func grain(_ image: CIImage, amount: Double, unit: CGFloat) -> CIImage {
         let extent = image.extent
         guard let noise = CIFilter.randomGenerator().outputImage else { return image }
         let size = max(1, 1.1 * unit)
-        let spread = CGFloat(amount * 0.28)
+        let spread = CGFloat(amount * 0.35)
         let mono = CIFilter.colorMatrix()
         mono.inputImage = noise.transformed(by: CGAffineTransform(scaleX: size, y: size))
         mono.rVector = CIVector(x: spread, y: 0, z: 0, w: 0)
         mono.gVector = CIVector(x: spread, y: 0, z: 0, w: 0)
         mono.bVector = CIVector(x: spread, y: 0, z: 0, w: 0)
         mono.aVector = CIVector(x: 0, y: 0, z: 0, w: 0)
-        mono.biasVector = CIVector(x: 0.5 - spread / 2, y: 0.5 - spread / 2, z: 0.5 - spread / 2, w: 1)
+        mono.biasVector = CIVector(x: 1 - spread / 2, y: 1 - spread / 2, z: 1 - spread / 2, w: 1)
         guard let texture = mono.outputImage?.cropped(to: extent) else { return image }
-        let overlay = CIFilter.overlayBlendMode()
-        overlay.inputImage = texture
-        overlay.backgroundImage = image
-        return overlay.outputImage ?? image
+        let multiply = CIFilter.multiplyCompositing()
+        multiply.inputImage = texture
+        multiply.backgroundImage = image
+        return multiply.outputImage ?? image
+    }
+
+    /// Multiplies RGB by a factor and makes the result opaque.
+    private static func scaled(_ image: CIImage, by factor: CGFloat) -> CIImage {
+        let filter = CIFilter.colorMatrix()
+        filter.inputImage = image
+        filter.rVector = CIVector(x: factor, y: 0, z: 0, w: 0)
+        filter.gVector = CIVector(x: 0, y: factor, z: 0, w: 0)
+        filter.bVector = CIVector(x: 0, y: 0, z: factor, w: 0)
+        filter.aVector = CIVector(x: 0, y: 0, z: 0, w: 0)
+        filter.biasVector = CIVector(x: 0, y: 0, z: 0, w: 1)
+        return filter.outputImage ?? image
+    }
+
+    private static func opaque(_ image: CIImage) -> CIImage {
+        let filter = CIFilter.colorMatrix()
+        filter.inputImage = image
+        filter.aVector = CIVector(x: 0, y: 0, z: 0, w: 0)
+        filter.biasVector = CIVector(x: 0, y: 0, z: 0, w: 1)
+        return filter.outputImage ?? image
     }
 
     /// A colour for blending in the perceptual stage. There the pixel values are already gamma-encoded,
