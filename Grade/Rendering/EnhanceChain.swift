@@ -251,7 +251,8 @@ enum EnhanceChain {
         let sum = CIFilter.additionCompositing()
         sum.inputImage = delta.outputImage
         sum.backgroundImage = colour
-        return opaque(sum.outputImage ?? luminance).cropped(to: luminance.extent)
+        guard let total = sum.outputImage else { return luminance }
+        return FilterChain.opaqueSum(total, layers: 3).cropped(to: luminance.extent)
     }
 
     private static func dissolve(from: CIImage, to: CIImage, amount: Double) -> CIImage {
@@ -262,11 +263,4 @@ enum EnhanceChain {
         return filter.outputImage?.cropped(to: from.extent) ?? from
     }
 
-    private static func opaque(_ image: CIImage) -> CIImage {
-        let filter = CIFilter.colorMatrix()
-        filter.inputImage = image
-        filter.aVector = CIVector(x: 0, y: 0, z: 0, w: 0)
-        filter.biasVector = CIVector(x: 0, y: 0, z: 0, w: 1)
-        return filter.outputImage ?? image
-    }
 }

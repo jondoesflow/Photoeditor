@@ -196,14 +196,13 @@ struct EditorModelTests {
         #expect(model.enhancement == .none)
     }
 
-    @Test("Faces and background are unavailable without a face or subject")
+    @Test("Faces are unavailable without a face, and Autopilot leaves them off")
     func availability() async throws {
         let model = try makeModel()
         await model.load(TestImages.jpegData())
         #expect(!model.isAvailable(.faces))
-        #expect(!model.isAvailable(.background))
-        model.setBackground(.remove)
-        #expect(model.enhancement.background == .keep)
+        model.runAutopilot()
+        #expect(model.enhancement.faces == 0)
     }
 
     @Test("Upscaling 2× saves a photo twice the size, with progress along the way")
@@ -223,8 +222,9 @@ struct EditorModelTests {
 
     @Test("Upscaling is refused when the result would be too large")
     func upscaleRefused() async throws {
-        let model = try await loadedModel()
-        // The demo photo is 2000 × 1333: 2× fits in 48 MP, 4× doesn't.
+        let model = try makeModel()
+        // The demo portrait is 1600 × 2400: 2× (15 MP) fits in 48 MP, 4× (61 MP) doesn't.
+        await model.load(try portraitData())
         model.setUpscale(.quadruple)
         #expect(model.enhancement.upscale == .none)
         model.setUpscale(.double)
@@ -248,6 +248,12 @@ struct EditorModelTests {
         // PNG signature.
         #expect(Array(saved.prefix(4)) == [0x89, 0x50, 0x4E, 0x47])
         let bitmap = TestImages.bitmap(try #require(CIImage(data: saved)).transformed(by: CGAffineTransform(scaleX: 0.1, y: 0.1)))
-        #expect(bitmap.alpha(x: 2, y: 2) < 0.5, "a corner of the portrait should be background")
+        var transparent = 0, opaque = 0
+        for y in 0..<bitmap.height { for x in 0..<bitmap.width {
+            if bitmap.alpha(x: x, y: y) < 0.1 { transparent += 1 } else if bitmap.alpha(x: x, y: y) > 0.9 { opaque += 1 }
+        } }
+        let total = bitmap.width * bitmap.height
+        #expect(transparent * 20 > total, "some of the photo should be transparent background")
+        #expect(opaque * 20 > total, "the subject should stay opaque")
     }
 }

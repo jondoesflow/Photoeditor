@@ -27,7 +27,7 @@
       "name": "Neon Nights",
       "category": "cinematic",
       "recipe": {
-        "exposure": -0.55,
+        "exposure": -1.0,
         "contrast": 0.25,
         "highlights": -0.3,
         "shadows": -0.15,
@@ -100,7 +100,7 @@
       "name": "Golden Hour",
       "category": "cinematic",
       "recipe": {
-        "exposure": 0.1,
+        "exposure": -0.2,
         "highlights": -0.2,
         "shadows": 0.15,
         "warmth": 0.55,
@@ -203,7 +203,8 @@
         "highlightTone": {
           "color": "#FF8FB1",
           "strength": 0.4
-        }
+        },
+        "exposure": -0.3
       }
     },
     {

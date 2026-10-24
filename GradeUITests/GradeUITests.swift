@@ -153,9 +153,14 @@ final class GradeUITests: XCTestCase {
     func testEnhanceGallery() {
         let app = launch(["-GradeDemo", "-GradeDemoPhoto", "portrait"])
         _ = waitForCanvas(app)
-        app.buttons["Enhance"].tap()
+        // The CI simulator has no Neural Engine, so analysis and thumbnails keep it busy for a while
+        // after the photo appears; a tap can be lost in that time, so try again if needed.
         let summary = app.staticTexts["insightsSummary"]
-        XCTAssertTrue(summary.waitForExistence(timeout: 5))
+        for _ in 0..<3 where !summary.exists {
+            app.buttons["Enhance"].tap()
+            _ = summary.waitForExistence(timeout: 20)
+        }
+        XCTAssertTrue(summary.exists)
         XCTAssertTrue(summary.label.contains("face"), "Analysis summary: \(summary.label)")
 
         app.buttons["autopilotButton"].tap()

@@ -118,6 +118,15 @@ struct FilterChainTests {
         #expect(after > before + 0.05)
     }
 
+    @Test("Glow leaves areas away from bright spots exactly as they were")
+    func glowKeepsBrightness() {
+        let image = TestImages.solid(0.4, 0.3, 0.2, size: CGSize(width: 100, height: 100))
+        let before = TestImages.bitmap(image).mean()
+        let after = TestImages.render(.only(.glow, 1), on: image).mean()
+        #expect(abs(after.red - before.red) < 0.01 && abs(after.green - before.green) < 0.01 && abs(after.blue - before.blue) < 0.01,
+                "\(before) → \(after)")
+    }
+
     @Test("Grain adds texture to a flat image without changing its brightness")
     func grain() {
         let image = TestImages.solid(0.5, 0.5, 0.5, size: CGSize(width: 128, height: 128))

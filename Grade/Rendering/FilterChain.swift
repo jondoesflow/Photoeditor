@@ -169,8 +169,7 @@ enum FilterChain {
         let add = CIFilter.additionCompositing()
         add.inputImage = scaled(halo, by: CGFloat(amount * 1.4))
         add.backgroundImage = image
-        // Both layers are opaque, so the sum's alpha is 2; reset it before later filters unpremultiply.
-        return add.outputImage.map(opaque)?.cropped(to: extent) ?? image
+        return add.outputImage.map { opaqueSum($0, layers: 2) }?.cropped(to: extent) ?? image
     }
 
     /// A cool, dark gradient from the top: turns a flat daytime sky into a night one.
@@ -243,9 +242,15 @@ enum FilterChain {
         return filter.outputImage ?? image
     }
 
-    private static func opaque(_ image: CIImage) -> CIImage {
+    /// Makes the sum of `layers` opaque images opaque again. Addition sums alpha too, so the sum has
+    /// alpha `layers`; colour filters see the colour divided by that alpha, so multiply it back.
+    static func opaqueSum(_ image: CIImage, layers: Int) -> CIImage {
+        let gain = CGFloat(layers)
         let filter = CIFilter.colorMatrix()
         filter.inputImage = image
+        filter.rVector = CIVector(x: gain, y: 0, z: 0, w: 0)
+        filter.gVector = CIVector(x: 0, y: gain, z: 0, w: 0)
+        filter.bVector = CIVector(x: 0, y: 0, z: gain, w: 0)
         filter.aVector = CIVector(x: 0, y: 0, z: 0, w: 0)
         filter.biasVector = CIVector(x: 0, y: 0, z: 0, w: 1)
         return filter.outputImage ?? image
