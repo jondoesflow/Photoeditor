@@ -86,7 +86,7 @@ final class GradeUITests: XCTestCase {
         XCTAssertTrue(app.buttons["Replace Original"].firstMatch.exists)
         screenshot("05-save-choice", app)
         saveAsNew.tap()
-        let toast = app.descendants(matching: .any)["savedToast"]
+        let toast = app.descendants(matching: .any)["savedToast"].firstMatch
         XCTAssertTrue(toast.waitForExistence(timeout: 20))
         XCTAssertTrue(toast.label.contains("Saved as new photo"), toast.label)
         screenshot("05-saved", app)
