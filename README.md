@@ -8,7 +8,7 @@ The app has no login, no account, no server and no analytics. Everything runs on
 - **Adjust:** 14 sliders (exposure, contrast, highlights, shadows, warmth, tint, saturation, vibrance, fade, night sky, glow, sharpen, vignette, grain) that apply on top of the chosen preset.
 - **My Looks:** save the current preset, strength and adjustments as your own look and reuse it on other photos. The look also stays selected when you open the next photo, so a series can be edited the same way.
 - **Before / after:** hold the photo to see the original, or turn on compare mode and drag the divider.
-- **Saving:** the full-resolution photo is rendered and added to Photos as a new HEIC image. The original is never changed. Date, camera and location metadata are kept. The app asks only for *add-only* photo access, so it can't read the rest of your library. Photos are opened with the system picker, which needs no permission at all.
+- **Saving:** Save asks whether to **Save as New Photo** (a separate HEIC copy; the original is untouched) or **Replace Original** (the edit is saved onto the library photo, like the Photos app's own Edit, and Photos keeps the original so **Edit → Revert** brings it back). New photos need only *add-only* access; Replace Original asks for full access the first time it's used. Photos with a removed background are saved as new transparent PNGs. Date, camera and location metadata are kept. Photos are opened with the system picker, which needs no permission.
 - **Privacy:** no network access. Saved looks are stored as JSON in Application Support. The app is designed for the "Data Not Collected" privacy label.
 
 ## How the looks work

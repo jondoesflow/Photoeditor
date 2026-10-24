@@ -256,4 +256,62 @@ struct EditorModelTests {
         #expect(transparent * 20 > total, "some of the photo should be transparent background")
         #expect(opaque * 20 > total, "the subject should stay opaque")
     }
+
+    // MARK: - Save as new or replace original
+
+    @Test("Replace Original saves the edit onto the library photo it came from")
+    func replaceOriginal() async throws {
+        let saver = RecordingSaver()
+        let model = try makeModel(saver: saver)
+        await model.load(try TestImages.demoPhotoData(), assetIdentifier: "ABC/L0/001")
+        #expect(model.canReplaceOriginal)
+        model.selectPreset("noir")
+        await model.save(to: .replaceOriginal)
+        #expect(model.saveState == .saved)
+        #expect(model.lastSaveDestination == .replaceOriginal)
+        let replaced = await saver.replaced
+        #expect(replaced.count == 1)
+        #expect(replaced.first?.assetIdentifier == "ABC/L0/001")
+        #expect(replaced.first?.uniformType == "public.heic")
+        #expect(await saver.saved.isEmpty)
+    }
+
+    @Test("Save as New Photo leaves the original alone")
+    func saveAsNew() async throws {
+        let saver = RecordingSaver()
+        let model = try makeModel(saver: saver)
+        await model.load(try TestImages.demoPhotoData(), assetIdentifier: "ABC/L0/001")
+        await model.save(to: .newPhoto)
+        #expect(model.lastSaveDestination == .newPhoto)
+        #expect(await saver.saved.count == 1)
+        #expect(await saver.replaced.isEmpty)
+    }
+
+    @Test("A photo that isn't from the library can only be saved as new")
+    func replaceNeedsLibraryPhoto() async throws {
+        let saver = RecordingSaver()
+        let model = try makeModel(saver: saver)
+        await model.load(try TestImages.demoPhotoData())
+        #expect(!model.canReplaceOriginal)
+        #expect(model.replaceUnavailableReason?.contains("library") == true)
+        await model.save(to: .replaceOriginal)
+        #expect(model.saveState == .idle)
+        #expect(await saver.replaced.isEmpty)
+    }
+
+    @Test("Opening another photo forgets the previous photo's library identifier")
+    func sourceResets() async throws {
+        let model = try makeModel()
+        await model.load(try TestImages.demoPhotoData(), assetIdentifier: "first")
+        await model.load(try TestImages.demoPhotoData())
+        #expect(model.sourceAssetID == nil)
+    }
+
+    @Test("A failed replace reports why")
+    func replaceFailure() async throws {
+        let model = try makeModel(saver: RecordingSaver(shouldFail: true))
+        await model.load(try TestImages.demoPhotoData(), assetIdentifier: "ABC")
+        await model.save(to: .replaceOriginal)
+        #expect(model.saveState == .failed(SaveError.editNotAuthorized.localizedDescription))
+    }
 }

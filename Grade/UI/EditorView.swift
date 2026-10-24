@@ -14,6 +14,7 @@ struct EditorView: View {
     @State private var pickerItem: PhotosPickerItem?
     @State private var tool = Tool.presets
     @State private var isComparing = false
+    @State private var isChoosingSave = false
 
     var body: some View {
         NavigationStack {
@@ -28,6 +29,20 @@ struct EditorView: View {
         .onChange(of: pickerItem) { _, item in
             guard let item else { return }
             Task { await load(item) }
+        }
+        .confirmationDialog("Save photo", isPresented: $isChoosingSave, titleVisibility: .visible) {
+            Button("Save as New Photo") {
+                Task { await model.save(to: .newPhoto) }
+            }
+            if model.canReplaceOriginal {
+                Button("Replace Original") {
+                    Task { await model.save(to: .replaceOriginal) }
+                }
+            }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text(model.replaceUnavailableReason
+                ?? "Replace Original saves your edit onto the photo in your library. Photos keeps the original, so you can always go back with Edit → Revert.")
         }
         .alert("Couldn't save", isPresented: saveFailedBinding) {
             Button("OK") { model.dismissSaveState() }
@@ -52,7 +67,7 @@ struct EditorView: View {
             } description: {
                 Text(message)
             } actions: {
-                PhotosPicker("Choose another photo", selection: $pickerItem, matching: .images)
+                PhotosPicker("Choose another photo", selection: $pickerItem, matching: .images, photoLibrary: .shared())
                     .buttonStyle(.borderedProminent)
             }
         case .editing:
@@ -115,14 +130,14 @@ struct EditorView: View {
     @ToolbarContentBuilder
     private var toolbar: some ToolbarContent {
         ToolbarItem(placement: .topBarLeading) {
-            PhotosPicker(selection: $pickerItem, matching: .images) {
+            PhotosPicker(selection: $pickerItem, matching: .images, photoLibrary: .shared()) {
                 Label("Choose photo", systemImage: "photo.on.rectangle.angled")
             }
             .accessibilityIdentifier("pickPhotoButton")
         }
         ToolbarItem(placement: .topBarTrailing) {
             Button {
-                Task { await model.save() }
+                isChoosingSave = true
             } label: {
                 if model.saveState == .saving {
                     if let progress = model.exportProgress {
@@ -161,8 +176,9 @@ struct EditorView: View {
     }
 
     private var savedMessage: String {
-        guard let size = model.lastSavedSize else { return "Saved to Photos" }
-        return "Saved to Photos · \(Int(size.width)) × \(Int(size.height))"
+        let action = model.lastSaveDestination == .replaceOriginal ? "Original replaced" : "Saved as new photo"
+        guard let size = model.lastSavedSize else { return action }
+        return "\(action) · \(Int(size.width)) × \(Int(size.height))"
     }
 
     private var saveFailedBinding: Binding<Bool> {
@@ -179,7 +195,8 @@ struct EditorView: View {
         do {
             if let data = try await item.loadTransferable(type: Data.self) {
                 isComparing = false
-                await model.load(data)
+                // Known when the picker is given the shared library; lets the edit replace the original.
+                await model.load(data, assetIdentifier: item.itemIdentifier)
             } else {
                 model.showLoadFailure()
             }

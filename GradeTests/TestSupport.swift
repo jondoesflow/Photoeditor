@@ -155,6 +155,13 @@ actor RecordingSaver: PhotoSaving {
         if shouldFail { throw SaveError.notAuthorized }
         saved.append(data)
     }
+
+    private(set) var replaced: [(assetIdentifier: String, data: Data, uniformType: String)] = []
+
+    func replace(assetIdentifier: String, with data: Data, uniformType: String) async throws {
+        if shouldFail { throw SaveError.editNotAuthorized }
+        replaced.append((assetIdentifier, data, uniformType))
+    }
 }
 
 func temporaryDirectory() -> URL {

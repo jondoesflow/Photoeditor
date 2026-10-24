@@ -22,6 +22,13 @@ final class EditorModel {
         case failed(String)
     }
 
+    enum SaveDestination: Equatable, Sendable {
+        /// Adds a separate copy; the original is untouched.
+        case newPhoto
+        /// Saves the edit onto the original library photo. Photos keeps the original for Revert.
+        case replaceOriginal
+    }
+
     nonisolated static let myLooksCategory = PresetCategory(id: "mine", name: "My Looks")
     /// Thumbnail key for the unedited photo.
     nonisolated static let originalID = "original"
@@ -49,6 +56,10 @@ final class EditorModel {
     private(set) var exportProgress: Double?
     /// The size of the last saved photo, shown in the confirmation.
     private(set) var lastSavedSize: CGSize?
+    /// Where the last photo was saved, for the confirmation.
+    private(set) var lastSaveDestination = SaveDestination.newPhoto
+    /// The photo library identifier of the open photo, when it came from the library.
+    private(set) var sourceAssetID: String?
     private(set) var saveState: SaveState = .idle
     /// Increments on every successful save; drives the haptic.
     private(set) var saveCount = 0
@@ -116,15 +127,26 @@ final class EditorModel {
 
     var canSave: Bool { phase == .editing && saveState != .saving }
 
+    /// Why the original can't be replaced, or nil when it can.
+    var replaceUnavailableReason: String? {
+        if sourceAssetID == nil { return "This photo isn't from your photo library, so it can only be saved as new." }
+        if enhancement.background == .remove { return "Photos with a transparent background are always saved as new." }
+        return nil
+    }
+
+    var canReplaceOriginal: Bool { replaceUnavailableReason == nil }
+
     // MARK: - Loading
 
     /// Opens and analyses a new photo, keeping the current look so it can be applied to a series of
     /// shots. Enhancements are specific to a photo, so they start again.
-    func load(_ data: Data) async {
+    /// - Parameter assetIdentifier: the photo's library identifier, so the edit can replace the original.
+    func load(_ data: Data, assetIdentifier: String? = nil) async {
         renderTask?.cancel()
         phase = .loading
         saveState = .idle
         enhancement = .none
+        sourceAssetID = assetIdentifier
         do {
             insights = try await renderer.load(data)
             original = try await renderer.renderPreview(.neutral)
@@ -139,6 +161,7 @@ final class EditorModel {
             edited = nil
             editedRecipe = nil
             editedEnhancement = nil
+            sourceAssetID = nil
             insights = .empty
             thumbnails = [:]
             phase = .failed(RenderError.unreadableImage.localizedDescription)
@@ -248,9 +271,10 @@ final class EditorModel {
 
     // MARK: - Saving
 
-    /// Renders the full-resolution photo and adds it to the camera roll as a new photo.
-    func save() async {
-        guard canSave else { return }
+    /// Renders the full-resolution photo and adds it to the library as a new photo, or saves it as an
+    /// edit of the original.
+    func save(to destination: SaveDestination = .newPhoto) async {
+        guard canSave, destination == .newPhoto || canReplaceOriginal else { return }
         saveState = .saving
         exportProgress = enhancement.upscale == .none ? nil : 0
         defer { exportProgress = nil }
@@ -260,8 +284,13 @@ final class EditorModel {
                     if self?.saveState == .saving { self?.exportProgress = progress }
                 }
             }
-            try await saver.save(export.data)
+            if destination == .replaceOriginal, let assetID = sourceAssetID {
+                try await saver.replace(assetIdentifier: assetID, with: export.data, uniformType: export.uniformType)
+            } else {
+                try await saver.save(export.data)
+            }
             lastSavedSize = export.pixelSize
+            lastSaveDestination = destination
             saveState = .saved
             saveCount += 1
         } catch {

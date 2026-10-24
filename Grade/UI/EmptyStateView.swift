@@ -29,7 +29,7 @@ struct EmptyStateView: View {
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, 24)
             Spacer()
-            PhotosPicker(selection: $pickerItem, matching: .images) {
+            PhotosPicker(selection: $pickerItem, matching: .images, photoLibrary: .shared()) {
                 Label("Choose a photo", systemImage: "photo.on.rectangle.angled")
                     .font(.headline)
                     .frame(maxWidth: .infinity)

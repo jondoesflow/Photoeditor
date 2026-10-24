@@ -44,7 +44,8 @@ targets:
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         LSApplicationCategoryType: public.app-category.photography
-        NSPhotoLibraryAddUsageDescription: Grade saves your edited photos to your library. Your originals are never changed.
+        NSPhotoLibraryAddUsageDescription: Grade saves your edited photos to your library as new photos.
+        NSPhotoLibraryUsageDescription: Grade needs this only when you choose Replace Original, to save your edit onto that photo. Photos keeps the original so you can revert.
         UILaunchScreen:
           UIColorName: LaunchBackground
         UIApplicationSceneManifest:

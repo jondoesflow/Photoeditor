@@ -80,8 +80,27 @@ final class GradeUITests: XCTestCase {
         app.buttons["compareButton"].tap()
 
         app.buttons["saveButton"].tap()
-        XCTAssertTrue(app.descendants(matching: .any)["savedToast"].waitForExistence(timeout: 20))
+        let saveAsNew = app.buttons["Save as New Photo"]
+        XCTAssertTrue(saveAsNew.waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["Replace Original"].exists)
+        screenshot("05-save-choice", app)
+        saveAsNew.tap()
+        let toast = app.descendants(matching: .any)["savedToast"]
+        XCTAssertTrue(toast.waitForExistence(timeout: 20))
+        XCTAssertTrue(toast.label.contains("Saved as new photo"), toast.label)
         screenshot("05-saved", app)
+
+        // Wait for the confirmation to go, then replace the original instead.
+        let gone = NSPredicate(format: "exists == false")
+        expectation(for: gone, evaluatedWith: toast)
+        waitForExpectations(timeout: 10)
+        app.buttons["saveButton"].tap()
+        let replace = app.buttons["Replace Original"]
+        XCTAssertTrue(replace.waitForExistence(timeout: 5))
+        replace.tap()
+        XCTAssertTrue(toast.waitForExistence(timeout: 20))
+        XCTAssertTrue(toast.label.contains("Original replaced"), toast.label)
+        screenshot("05-replaced", app)
     }
 
     @MainActor

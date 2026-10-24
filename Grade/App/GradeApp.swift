@@ -44,7 +44,8 @@ enum AppEnvironment {
         if let index = arguments.firstIndex(of: "-GradePreset"), arguments.indices.contains(index + 1) {
             model.selectPreset(arguments[index + 1])
         }
-        await model.load(data)
+        // A stand-in library identifier, so Replace Original can be exercised; DemoSaver keeps it in memory.
+        await model.load(data, assetIdentifier: "demo-asset")
     }
 
     private static func demoPhotoName(_ arguments: [String]) -> String {
