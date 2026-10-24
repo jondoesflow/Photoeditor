@@ -7,7 +7,7 @@ from pathlib import Path
 log = Path(sys.argv[1]).read_text(errors="replace") if Path(sys.argv[1]).exists() else ""
 out = Path(sys.argv[2])
 
-diag = re.compile(r"^(/[^:\n]+):(\d+):(\d+): (error|warning): (.+)$", re.M)
+diag = re.compile(r"^([/@][^:\n]+):(\d+):(\d+): (error|warning): (.+)$", re.M)
 seen = set()
 errors, warnings = [], []
 for path, line, col, kind, message in diag.findall(log):

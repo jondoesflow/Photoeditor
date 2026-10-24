@@ -49,8 +49,7 @@ struct Bitmap {
 }
 
 enum TestImages {
-    /// Core Image contexts are thread-safe.
-    nonisolated(unsafe) static let context = CIContext()
+    static let context = CIContext()
     static var sRGB: CGColorSpace { CGColorSpace(name: CGColorSpace.sRGB)! }
 
     static func solid(_ red: Double, _ green: Double, _ blue: Double, size: CGSize = CGSize(width: 64, height: 64)) -> CIImage {

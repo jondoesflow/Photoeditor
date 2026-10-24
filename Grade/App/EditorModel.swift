@@ -20,9 +20,9 @@ final class EditorModel {
         case failed(String)
     }
 
-    static let myLooksCategory = PresetCategory(id: "mine", name: "My Looks")
+    nonisolated static let myLooksCategory = PresetCategory(id: "mine", name: "My Looks")
     /// Thumbnail key for the unedited photo.
-    static let originalID = "original"
+    nonisolated static let originalID = "original"
 
     let library: PresetLibrary
     private(set) var looks: [Preset]
