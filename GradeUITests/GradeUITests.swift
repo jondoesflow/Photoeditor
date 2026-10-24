@@ -80,9 +80,10 @@ final class GradeUITests: XCTestCase {
         app.buttons["compareButton"].tap()
 
         app.buttons["saveButton"].tap()
-        let saveAsNew = app.buttons["Save as New Photo"]
+        // iOS 26 exposes confirmation dialog buttons twice, so take the first match.
+        let saveAsNew = app.buttons["Save as New Photo"].firstMatch
         XCTAssertTrue(saveAsNew.waitForExistence(timeout: 5))
-        XCTAssertTrue(app.buttons["Replace Original"].exists)
+        XCTAssertTrue(app.buttons["Replace Original"].firstMatch.exists)
         screenshot("05-save-choice", app)
         saveAsNew.tap()
         let toast = app.descendants(matching: .any)["savedToast"]
@@ -95,7 +96,7 @@ final class GradeUITests: XCTestCase {
         expectation(for: gone, evaluatedWith: toast)
         waitForExpectations(timeout: 10)
         app.buttons["saveButton"].tap()
-        let replace = app.buttons["Replace Original"]
+        let replace = app.buttons["Replace Original"].firstMatch
         XCTAssertTrue(replace.waitForExistence(timeout: 5))
         replace.tap()
         XCTAssertTrue(toast.waitForExistence(timeout: 20))
