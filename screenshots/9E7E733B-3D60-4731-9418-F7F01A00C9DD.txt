@@ -1,0 +1,103 @@
+Application, 0x107607e80, pid: 12902, label: 'Grade' <App element pid: 12902>
+  Window (Main), 0x118344000, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 12902, elementOrHash.elementID: 4398663680.3>
+    Other, 0x118344140, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 12902, elementOrHash.elementID: 4447176192.4>
+      Other, 0x118344280, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 12902, elementOrHash.elementID: 4448486656.5>
+        Other, 0x1183443c0, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 12902, elementOrHash.elementID: 4398662656.6>
+          Other, 0x118344500, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 12902, elementOrHash.elementID: 4446572032.7>
+            Other, 0x118344640, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 12902, elementOrHash.elementID: 4447165440.8>
+              NavigationBar, 0x118344780, {{0.0, 62.0}, {402.0, 54.0}}, identifier: 'Grade' <AX element pid: 12902, elementOrHash.elementID: 4448714752.9>
+                Button, 0x1183448c0, {{20.0, 66.0}, {37.0, 36.0}}, identifier: 'pickPhotoButton', label: 'Choose photo' <AX element pid: 12902, elementOrHash.elementID: 4448499456.26>
+                StaticText, 0x118344a00, {{176.7, 73.7}, {48.3, 20.7}}, label: 'Grade' <AX element pid: 12902, elementOrHash.elementID: 4398746240.13>
+                Other, 0x118344b40, {{319.7, 66.0}, {62.3, 36.0}}, identifier: 'saveButton', label: 'Save to Photos' <AX element pid: 12902, elementOrHash.elementID: 4398703360.27>
+                  Other, 0x118344c80, {{319.7, 66.0}, {62.3, 36.0}} <AX element pid: 12902, elementOrHash.elementID: 4446573824.28>
+                    Button, 0x118344dc0, {{319.7, 66.0}, {62.3, 36.0}}, identifier: 'saveButton', label: 'Save to Photos' <AX element pid: 12902, elementOrHash.elementID: 4446649664.29>
+              Other, 0x118344f00, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 12902, elementOrHash.elementID: 4447165888.10>
+                Other, 0x118345040, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 12902, elementOrHash.elementID: 4446217856.15>
+                  Other, 0x118345180, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 12902, elementOrHash.elementID: 4398743552.18>
+                    Other, 0x1183452c0, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 12902, elementOrHash.elementID: 4446574720.20>
+                      Other, 0x118345400, {{12.0, 229.7}, {378.0, 251.7}}, identifier: 'canvas', label: 'Photo with Teal & Orange', value: ready <AX element pid: 12902, elementOrHash.elementID: 4447172608.30>
+                        Other, 0x118345540, {{12.0, 229.7}, {378.0, 251.7}} <AX element pid: 12902, elementOrHash.elementID: 4446616448.38>
+                        Image, 0x118345680, {{12.0, 229.7}, {378.0, 251.7}} <AX element pid: 12902, elementOrHash.elementID: 4446616896.39>
+                      Button, 0x1183457c0, {{342.0, 535.0}, {40.0, 40.0}}, identifier: 'compareButton', label: 'Compare before and after' <AX element pid: 12902, elementOrHash.elementID: 4399696960.31>
+                      SegmentedControl, 0x118345900, {{16.0, 609.0}, {370.0, 31.0}} <AX element pid: 12902, elementOrHash.elementID: 4448727808.32>
+                        Button, 0x118345a40, {{16.0, 609.0}, {123.0, 32.0}}, label: 'Presets', Selected <AX element pid: 12902, elementOrHash.elementID: 4448728576.40>
+                        Button, 0x118345b80, {{139.0, 609.0}, {123.0, 32.0}}, label: 'Adjust' <AX element pid: 12902, elementOrHash.elementID: 4448729344.41>
+                        Button, 0x118345cc0, {{262.0, 609.0}, {124.0, 32.0}}, label: 'Enhance' <AX element pid: 12902, elementOrHash.elementID: 4448730112.42>
+                      ScrollView, 0x118345e00, {{0.0, 654.0}, {402.0, 27.7}} <AX element pid: 12902, elementOrHash.elementID: 4398720000.33>
+                        Other, 0x118345f40, {{0.0, 654.0}, {502.0, 27.7}} <AX element pid: 12902, elementOrHash.elementID: 4718819328.43>
+                          Button, 0x118346080, {{16.0, 654.0}, {40.3, 27.7}}, identifier: 'category-all', label: 'All', Selected <AX element pid: 12902, elementOrHash.elementID: 4399709056.45>
+                          Button, 0x1183461c0, {{64.3, 654.0}, {87.7, 27.7}}, identifier: 'category-cinematic', label: 'Cinematic' <AX element pid: 12902, elementOrHash.elementID: 4399704576.46>
+                          Button, 0x118346300, {{160.0, 654.0}, {67.0, 27.7}}, identifier: 'category-moody', label: 'Moody' <AX element pid: 12902, elementOrHash.elementID: 4446565952.47>
+                          Button, 0x118346440, {{235.0, 654.0}, {50.7, 27.7}}, identifier: 'category-film', label: 'Film' <AX element pid: 12902, elementOrHash.elementID: 4446565056.48>
+                          Button, 0x118346580, {{293.7, 654.0}, {72.7, 27.7}}, identifier: 'category-vintage', label: 'Vintage' <AX element pid: 12902, elementOrHash.elementID: 4446633984.49>
+                          Button, 0x1183466c0, {{374.3, 654.0}, {111.7, 27.7}}, identifier: 'category-mono', label: 'Black & White' <AX element pid: 12902, elementOrHash.elementID: 4446634432.50>
+                      ScrollView, 0x118346800, {{0.0, 695.7}, {402.0, 91.3}} <AX element pid: 12902, elementOrHash.elementID: 4398723072.34>
+                        Other, 0x118346940, {{0.0, 695.7}, {1912.0, 91.3}} <AX element pid: 12902, elementOrHash.elementID: 4718820864.44>
+                          Button, 0x118346a80, {{2.3, 695.7}, {107.3, 91.3}}, identifier: 'preset-original', label: 'Original' <AX element pid: 12902, elementOrHash.elementID: 4446722624.72>
+                            Image, 0x118346bc0, {{2.3, 695.7}, {107.3, 72.0}} <AX element pid: 12902, elementOrHash.elementID: 4446721280.93>
+                            StaticText, 0x118346d00, {{35.7, 773.7}, {40.7, 13.3}}, label: 'Original' <AX element pid: 12902, elementOrHash.elementID: 4446635328.51>
+                          Button, 0x118346e40, {{92.3, 695.7}, {107.3, 91.3}}, identifier: 'preset-neon-nights', label: 'Neon Nights' <AX element pid: 12902, elementOrHash.elementID: 4446723072.73>
+                            Image, 0x118346f80, {{92.3, 695.7}, {107.3, 72.0}} <AX element pid: 12902, elementOrHash.elementID: 4446720384.94>
+                            StaticText, 0x1183470c0, {{113.5, 773.7}, {65.0, 13.3}}, label: 'Neon Nights' <AX element pid: 12902, elementOrHash.elementID: 4446635776.52>
+                          Button, 0x118347200, {{182.3, 695.7}, {107.3, 91.3}}, identifier: 'preset-teal-orange', label: 'Teal & Orange', Selected <AX element pid: 12902, elementOrHash.elementID: 4446723968.74>
+                            Image, 0x118347340, {{182.3, 695.7}, {107.3, 72.0}} <AX element pid: 12902, elementOrHash.elementID: 4446723520.95>
+                            StaticText, 0x118347480, {{197.0, 773.7}, {78.0, 13.3}}, label: 'Teal & Orange' <AX element pid: 12902, elementOrHash.elementID: 4446636224.53>
+                          Button, 0x1183475c0, {{272.3, 695.7}, {107.3, 91.3}}, identifier: 'preset-midnight', label: 'Midnight' <AX element pid: 12902, elementOrHash.elementID: 4446724864.75>
+                            Image, 0x118347700, {{272.3, 695.7}, {107.3, 72.0}} <AX element pid: 12902, elementOrHash.elementID: 4446724416.96>
+                            StaticText, 0x118347840, {{303.0, 773.7}, {46.0, 13.3}}, label: 'Midnight' <AX element pid: 12902, elementOrHash.elementID: 4446637120.54>
+                          Button, 0x118347980, {{362.3, 695.7}, {107.3, 91.3}}, identifier: 'preset-golden-hour', label: 'Golden Hour' <AX element pid: 12902, elementOrHash.elementID: 4446726208.76>
+                            Image, 0x118347ac0, {{362.3, 695.7}, {107.3, 72.0}} <AX element pid: 12902, elementOrHash.elementID: 4446725760.97>
+                            StaticText, 0x118347c00, {{382.8, 773.7}, {66.3, 13.3}}, label: 'Golden Hour' <AX element pid: 12902, elementOrHash.elementID: 4446637568.55>
+                          Button, 0x118347d40, {{452.3, 695.7}, {107.3, 91.3}}, identifier: 'preset-dune', label: 'Dune' <AX element pid: 12902, elementOrHash.elementID: 4446727104.77>
+                            Image, 0x118347e80, {{452.3, 695.7}, {107.3, 72.0}} <AX element pid: 12902, elementOrHash.elementID: 4446726656.98>
+                            StaticText, 0x11834c000, {{492.2, 773.7}, {27.7, 13.3}}, label: 'Dune' <AX element pid: 12902, elementOrHash.elementID: 4446638016.56>
+                          Button, 0x11834c140, {{542.3, 695.7}, {107.3, 91.3}}, identifier: 'preset-moody-forest', label: 'Moody Forest' <AX element pid: 12902, elementOrHash.elementID: 4446728000.78>
+                            Image, 0x11834c280, {{542.3, 695.7}, {107.3, 72.0}} <AX element pid: 12902, elementOrHash.elementID: 4446727552.99>
+                            StaticText, 0x11834c3c0, {{559.8, 773.7}, {72.3, 13.3}}, label: 'Moody Forest' <AX element pid: 12902, elementOrHash.elementID: 4446638464.57>
+                          Button, 0x11834c500, {{632.3, 695.7}, {107.3, 91.3}}, identifier: 'preset-overcast', label: 'Overcast' <AX element pid: 12902, elementOrHash.elementID: 4446728896.79>
+                            Image, 0x11834c640, {{632.3, 695.7}, {107.3, 72.0}} <AX element pid: 12902, elementOrHash.elementID: 4446728448.100>
+                            StaticText, 0x11834c780, {{662.5, 773.7}, {47.0, 13.3}}, label: 'Overcast' <AX element pid: 12902, elementOrHash.elementID: 4446639360.58>
+                          Button, 0x11834c8c0, {{722.3, 695.7}, {107.3, 91.3}}, identifier: 'preset-storm', label: 'Storm' <AX element pid: 12902, elementOrHash.elementID: 4446729792.80>
+                            Image, 0x11834ca00, {{722.3, 695.7}, {107.3, 72.0}} <AX element pid: 12902, elementOrHash.elementID: 4446729344.101>
+                            StaticText, 0x11834cb40, {{760.2, 773.7}, {31.7, 13.3}}, label: 'Storm' <AX element pid: 12902, elementOrHash.elementID: 4446639808.59>
+                          Button, 0x11834cc80, {{812.3, 695.7}, {107.3, 91.3}}, identifier: 'preset-dusk-pink', label: 'Dusk Pink' <AX element pid: 12902, elementOrHash.elementID: 4446730688.81>
+                            Image, 0x11834cdc0, {{812.3, 695.7}, {107.3, 72.0}} <AX element pid: 12902, elementOrHash.elementID: 4446730240.102>
+                            StaticText, 0x11834cf00, {{840.0, 773.7}, {52.0, 13.3}}, label: 'Dusk Pink' <AX element pid: 12902, elementOrHash.elementID: 4446640256.60>
+                          Button, 0x11834d040, {{902.3, 695.7}, {107.3, 91.3}}, identifier: 'preset-warm-film', label: 'Warm Film' <AX element pid: 12902, elementOrHash.elementID: 4446731584.82>
+                            Image, 0x11834d180, {{902.3, 695.7}, {107.3, 72.0}} <AX element pid: 12902, elementOrHash.elementID: 4446731136.103>
+                            StaticText, 0x11834d2c0, {{928.3, 773.7}, {55.3, 13.3}}, label: 'Warm Film' <AX element pid: 12902, elementOrHash.elementID: 4446640704.61>
+                          Button, 0x11834d400, {{992.3, 695.7}, {107.3, 91.3}}, identifier: 'preset-faded-film', label: 'Faded Film' <AX element pid: 12902, elementOrHash.elementID: 4399696512.83>
+                            Image, 0x11834d540, {{992.3, 695.7}, {107.3, 72.0}} <AX element pid: 12902, elementOrHash.elementID: 4445991168.104>
+                            StaticText, 0x11834d680, {{1017.5, 773.7}, {57.0, 13.3}}, label: 'Faded Film' <AX element pid: 12902, elementOrHash.elementID: 4446641152.62>
+                          Button, 0x11834d7c0, {{1082.3, 695.7}, {107.3, 91.3}}, identifier: 'preset-cool-film', label: 'Cool Film' <AX element pid: 12902, elementOrHash.elementID: 4447173056.84>
+                            Image, 0x11834d900, {{1082.3, 695.7}, {107.3, 72.0}} <AX element pid: 12902, elementOrHash.elementID: 4446661568.105>
+                            StaticText, 0x11834da40, {{1111.5, 773.7}, {49.0, 13.3}}, label: 'Cool Film' <AX element pid: 12902, elementOrHash.elementID: 4446642048.63>
+                          Button, 0x11834db80, {{1172.3, 695.7}, {107.3, 91.3}}, identifier: 'preset-slide-film', label: 'Slide Film' <AX element pid: 12902, elementOrHash.elementID: 4446749120.85>
+                            Image, 0x11834dcc0, {{1172.3, 695.7}, {107.3, 72.0}} <AX element pid: 12902, elementOrHash.elementID: 4446748672.106>
+                            StaticText, 0x11834de00, {{1200.7, 773.7}, {50.7, 13.3}}, label: 'Slide Film' <AX element pid: 12902, elementOrHash.elementID: 4446642496.64>
+                          Button, 0x11834df40, {{1262.3, 695.7}, {107.3, 91.3}}, identifier: 'preset-cross-process', label: 'Cross Process' <AX element pid: 12902, elementOrHash.elementID: 4446750464.86>
+                            Image, 0x11834e080, {{1262.3, 695.7}, {107.3, 72.0}} <AX element pid: 12902, elementOrHash.elementID: 4446749568.107>
+                            StaticText, 0x11834e1c0, {{1278.3, 773.7}, {75.3, 13.3}}, label: 'Cross Process' <AX element pid: 12902, elementOrHash.elementID: 4446643392.65>
+                          Button, 0x11834e300, {{1352.3, 695.7}, {107.3, 91.3}}, identifier: 'preset-seventies', label: 'Seventies' <AX element pid: 12902, elementOrHash.elementID: 4446751360.87>
+                            Image, 0x11834e440, {{1352.3, 695.7}, {107.3, 72.0}} <AX element pid: 12902, elementOrHash.elementID: 4446750912.108>
+                            StaticText, 0x11834e580, {{1380.5, 773.7}, {51.0, 13.3}}, label: 'Seventies' <AX element pid: 12902, elementOrHash.elementID: 4446644288.66>
+                          Button, 0x11834e6c0, {{1442.3, 695.7}, {107.3, 91.3}}, identifier: 'preset-instant', label: 'Instant' <AX element pid: 12902, elementOrHash.elementID: 4446752256.88>
+                            Image, 0x11834e800, {{1442.3, 695.7}, {107.3, 72.0}} <AX element pid: 12902, elementOrHash.elementID: 4446751808.109>
+                            StaticText, 0x11834e940, {{1478.0, 773.7}, {36.0, 13.3}}, label: 'Instant' <AX element pid: 12902, elementOrHash.elementID: 4446645184.67>
+                          Button, 0x11834ea80, {{1532.3, 695.7}, {107.3, 91.3}}, identifier: 'preset-sepia', label: 'Sepia' <AX element pid: 12902, elementOrHash.elementID: 4446753152.89>
+                            Image, 0x11834ebc0, {{1532.3, 695.7}, {107.3, 72.0}} <AX element pid: 12902, elementOrHash.elementID: 4446752704.110>
+                            StaticText, 0x11834ed00, {{1571.3, 773.7}, {29.3, 13.3}}, label: 'Sepia' <AX element pid: 12902, elementOrHash.elementID: 4446645632.68>
+                          Button, 0x11834ee40, {{1622.3, 695.7}, {107.3, 91.3}}, identifier: 'preset-silver', label: 'Silver' <AX element pid: 12902, elementOrHash.elementID: 4446754496.90>
+                            Image, 0x11834ef80, {{1622.3, 695.7}, {107.3, 72.0}} <AX element pid: 12902, elementOrHash.elementID: 4446754048.111>
+                            StaticText, 0x11834f0c0, {{1661.3, 773.7}, {29.3, 13.3}}, label: 'Silver' <AX element pid: 12902, elementOrHash.elementID: 4446646080.69>
+                          Button, 0x11834f200, {{1712.3, 695.7}, {107.3, 91.3}}, identifier: 'preset-noir', label: 'Noir' <AX element pid: 12902, elementOrHash.elementID: 4446755840.91>
+                            Image, 0x11834f340, {{1712.3, 695.7}, {107.3, 72.0}} <AX element pid: 12902, elementOrHash.elementID: 4446755392.112>
+                            StaticText, 0x11834f480, {{1755.0, 773.7}, {22.0, 13.3}}, label: 'Noir' <AX element pid: 12902, elementOrHash.elementID: 4446646528.70>
+                          Button, 0x11834f5c0, {{1802.3, 695.7}, {107.3, 91.3}}, identifier: 'preset-soft-mono', label: 'Soft Mono' <AX element pid: 12902, elementOrHash.elementID: 4446757184.92>
+                            Image, 0x11834f700, {{1802.3, 695.7}, {107.3, 72.0}} <AX element pid: 12902, elementOrHash.elementID: 4446756736.113>
+                            StaticText, 0x11834f840, {{1828.8, 773.7}, {54.3, 13.3}}, label: 'Soft Mono' <AX element pid: 12902, elementOrHash.elementID: 4446646976.71>
+                      StaticText, 0x11834f980, {{16.0, 808.7}, {54.3, 15.7}}, label: 'Strength' <AX element pid: 12902, elementOrHash.elementID: 4446647872.35>
+                      Slider, 0x11834fac0, {{82.3, 801.0}, {259.7, 31.0}}, identifier: 'intensitySlider', label: 'Strength', value: 100% <AX element pid: 12902, elementOrHash.elementID: 4718811648.36>
+                      StaticText, 0x11834fc00, {{361.3, 808.7}, {24.7, 15.7}}, label: '100' <AX element pid: 12902, elementOrHash.elementID: 4446649216.37>
+              Other, 0x11834fd40, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 12902, elementOrHash.elementID: 4447178752.11>
+                Other, 0x11834fe80, {{0.0, 0.0}, {402.0, 874.0}} <AX element pid: 12902, elementOrHash.elementID: 4447180800.16>

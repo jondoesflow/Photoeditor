@@ -1,0 +1,4 @@
+Query chain:
+ →Find: Target Application 'com.jondoesflow.grade'
+  ↪︎Find: Descendants matching type Any
+    ↪︎Find: Elements matching predicate '"canvas" IN identifiers'
