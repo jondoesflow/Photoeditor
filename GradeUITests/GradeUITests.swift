@@ -26,7 +26,8 @@ final class GradeUITests: XCTestCase {
     @MainActor
     private func waitForCanvas(_ app: XCUIApplication, label: String? = nil) -> XCUIElement {
         let canvas = app.descendants(matching: .any)["canvas"]
-        XCTAssertTrue(canvas.waitForExistence(timeout: 15))
+        // Opening includes analysis, which on the CPU-only CI simulator can take most of a minute.
+        XCTAssertTrue(canvas.waitForExistence(timeout: 90))
         // The label changes as soon as a look is picked; the value turns "ready" once its preview has rendered.
         let format = label == nil ? "value == 'ready'" : "label == %@ AND value == 'ready'"
         let predicate = NSPredicate(format: format, argumentArray: label.map { ["Photo with \($0)"] } ?? [])
