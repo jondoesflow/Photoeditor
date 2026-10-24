@@ -1,0 +1,93 @@
+name: CI
+
+# Builds and tests Grade on a GitHub-hosted Mac (no local Mac needed).
+# Results, screenshots and logs are pushed to the `ci-reports` branch after every run.
+
+on:
+  push:
+    branches-ignore: [ci-reports, testflight-reports]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-test:
+    runs-on: macos-26
+    timeout-minutes: 75
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Select newest Xcode
+        run: |
+          XCODE=$(ls -d /Applications/Xcode_*.app | sort -V | tail -1)
+          echo "Using $XCODE"
+          sudo xcode-select -s "$XCODE"
+          xcodebuild -version
+          mkdir -p build reports
+          { xcodebuild -version; sw_vers; } > reports/environment.txt
+
+      - name: Install tools
+        run: |
+          brew install xcodegen
+          which xcbeautify || brew install xcbeautify
+
+      - name: Generate Xcode project
+        run: xcodegen generate
+
+      - name: Pick simulator
+        id: sim
+        run: |
+          xcrun simctl list devices available -j | python3 scripts/pick_simulator.py > build/sim.txt
+          cat build/sim.txt
+          echo "udid=$(head -1 build/sim.txt)" >> "$GITHUB_OUTPUT"
+          cat build/sim.txt >> reports/environment.txt
+
+      - name: Build and test
+        id: test
+        run: |
+          set -o pipefail
+          xcodebuild test \
+            -project Grade.xcodeproj \
+            -scheme Grade \
+            -destination "id=${{ steps.sim.outputs.udid }}" \
+            -resultBundlePath build/Results.xcresult \
+            -derivedDataPath build/DerivedData \
+            -parallel-testing-enabled NO \
+            2>&1 | tee build/xcodebuild.log | xcbeautify --renderer github-actions
+
+      - name: Package simulator app (for Appetize or any iOS simulator)
+        if: always()
+        run: |
+          APP=build/DerivedData/Build/Products/Debug-iphonesimulator/Grade.app
+          if [ -d "$APP" ]; then
+            (cd "$(dirname "$APP")" && zip -qr -y "$GITHUB_WORKSPACE/reports/Grade-simulator.zip" Grade.app)
+            ls -la reports/Grade-simulator.zip
+          fi
+
+      - name: Collect reports
+        if: always()
+        run: |
+          python3 scripts/summarise_build.py build/xcodebuild.log reports/build-summary.md || true
+          if [ -d build/Results.xcresult ]; then
+            xcrun xcresulttool get test-results summary --path build/Results.xcresult --compact > reports/test-summary.json || true
+            xcrun xcresulttool get test-results tests --path build/Results.xcresult --compact > reports/tests.json || true
+            mkdir -p reports/screenshots
+            xcrun xcresulttool export attachments --path build/Results.xcresult --output-path reports/screenshots || true
+          fi
+          gzip -c build/xcodebuild.log > reports/xcodebuild.log.gz 2>/dev/null || true
+          echo "${GITHUB_SHA} ${GITHUB_REF_NAME}" > reports/commit.txt
+
+      - name: Publish reports to ci-reports branch
+        if: always()
+        run: |
+          cd reports
+          git init -q
+          git checkout -q -b ci-reports
+          git add -A
+          git -c user.name="grade-ci" -c user.email="grade-ci@users.noreply.github.com" commit -qm "CI reports for ${GITHUB_SHA}"
+          git push -f -q "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" ci-reports

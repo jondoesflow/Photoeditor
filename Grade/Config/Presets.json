@@ -1,0 +1,401 @@
+{
+  "categories": [
+    {
+      "id": "cinematic",
+      "name": "Cinematic"
+    },
+    {
+      "id": "moody",
+      "name": "Moody"
+    },
+    {
+      "id": "film",
+      "name": "Film"
+    },
+    {
+      "id": "vintage",
+      "name": "Vintage"
+    },
+    {
+      "id": "mono",
+      "name": "Black & White"
+    }
+  ],
+  "presets": [
+    {
+      "id": "neon-nights",
+      "name": "Neon Nights",
+      "category": "cinematic",
+      "recipe": {
+        "exposure": -0.45,
+        "contrast": 0.25,
+        "highlights": -0.3,
+        "shadows": -0.15,
+        "warmth": -0.35,
+        "tint": -0.05,
+        "saturation": 0.05,
+        "vibrance": 0.35,
+        "fade": 0.08,
+        "skyDarken": 0.75,
+        "glow": 0.5,
+        "vignette": 0.55,
+        "grain": 0.3,
+        "sharpen": 0.15,
+        "shadowTone": {
+          "color": "#0B5C66",
+          "strength": 0.65
+        },
+        "highlightTone": {
+          "color": "#FF9E4A",
+          "strength": 0.45
+        }
+      }
+    },
+    {
+      "id": "teal-orange",
+      "name": "Teal & Orange",
+      "category": "cinematic",
+      "recipe": {
+        "contrast": 0.2,
+        "highlights": -0.15,
+        "warmth": 0.1,
+        "vibrance": 0.3,
+        "vignette": 0.25,
+        "sharpen": 0.1,
+        "shadowTone": {
+          "color": "#127A8A",
+          "strength": 0.55
+        },
+        "highlightTone": {
+          "color": "#FFA155",
+          "strength": 0.5
+        }
+      }
+    },
+    {
+      "id": "midnight",
+      "name": "Midnight",
+      "category": "cinematic",
+      "recipe": {
+        "exposure": -0.6,
+        "contrast": 0.15,
+        "warmth": -0.6,
+        "saturation": -0.25,
+        "fade": 0.05,
+        "skyDarken": 0.5,
+        "vignette": 0.5,
+        "grain": 0.2,
+        "shadowTone": {
+          "color": "#1B3A6B",
+          "strength": 0.6
+        },
+        "highlightTone": {
+          "color": "#9FC3FF",
+          "strength": 0.25
+        }
+      }
+    },
+    {
+      "id": "golden-hour",
+      "name": "Golden Hour",
+      "category": "cinematic",
+      "recipe": {
+        "exposure": 0.1,
+        "highlights": -0.2,
+        "shadows": 0.15,
+        "warmth": 0.55,
+        "tint": 0.1,
+        "vibrance": 0.3,
+        "glow": 0.3,
+        "vignette": 0.2,
+        "highlightTone": {
+          "color": "#FFC46B",
+          "strength": 0.45
+        }
+      }
+    },
+    {
+      "id": "dune",
+      "name": "Dune",
+      "category": "cinematic",
+      "recipe": {
+        "contrast": 0.15,
+        "warmth": 0.4,
+        "saturation": -0.15,
+        "fade": 0.1,
+        "grain": 0.15,
+        "shadowTone": {
+          "color": "#6B4A2B",
+          "strength": 0.4
+        },
+        "highlightTone": {
+          "color": "#FFD39A",
+          "strength": 0.35
+        }
+      }
+    },
+    {
+      "id": "moody-forest",
+      "name": "Moody Forest",
+      "category": "moody",
+      "recipe": {
+        "exposure": -0.2,
+        "contrast": 0.2,
+        "shadows": -0.1,
+        "warmth": -0.1,
+        "tint": -0.15,
+        "saturation": -0.25,
+        "fade": 0.15,
+        "vignette": 0.4,
+        "shadowTone": {
+          "color": "#1F4D3A",
+          "strength": 0.5
+        }
+      }
+    },
+    {
+      "id": "overcast",
+      "name": "Overcast",
+      "category": "moody",
+      "recipe": {
+        "exposure": -0.1,
+        "contrast": -0.1,
+        "warmth": -0.2,
+        "saturation": -0.35,
+        "fade": 0.2,
+        "grain": 0.15,
+        "shadowTone": {
+          "color": "#3A4A5A",
+          "strength": 0.4
+        }
+      }
+    },
+    {
+      "id": "storm",
+      "name": "Storm",
+      "category": "moody",
+      "recipe": {
+        "exposure": -0.3,
+        "contrast": 0.35,
+        "highlights": -0.4,
+        "shadows": 0.1,
+        "warmth": -0.25,
+        "saturation": -0.4,
+        "skyDarken": 0.6,
+        "vignette": 0.45,
+        "sharpen": 0.3
+      }
+    },
+    {
+      "id": "dusk-pink",
+      "name": "Dusk Pink",
+      "category": "moody",
+      "recipe": {
+        "contrast": 0.05,
+        "warmth": 0.1,
+        "tint": 0.35,
+        "fade": 0.15,
+        "glow": 0.2,
+        "shadowTone": {
+          "color": "#4B2A6B",
+          "strength": 0.45
+        },
+        "highlightTone": {
+          "color": "#FF8FB1",
+          "strength": 0.4
+        }
+      }
+    },
+    {
+      "id": "warm-film",
+      "name": "Warm Film",
+      "category": "film",
+      "recipe": {
+        "contrast": 0.1,
+        "warmth": 0.25,
+        "saturation": -0.1,
+        "fade": 0.15,
+        "grain": 0.35,
+        "shadowTone": {
+          "color": "#3B5A5A",
+          "strength": 0.25
+        },
+        "highlightTone": {
+          "color": "#FFCF8A",
+          "strength": 0.3
+        }
+      }
+    },
+    {
+      "id": "faded-film",
+      "name": "Faded Film",
+      "category": "film",
+      "recipe": {
+        "contrast": -0.15,
+        "warmth": 0.1,
+        "saturation": -0.2,
+        "fade": 0.45,
+        "grain": 0.3,
+        "shadowTone": {
+          "color": "#2F4F6F",
+          "strength": 0.3
+        }
+      }
+    },
+    {
+      "id": "cool-film",
+      "name": "Cool Film",
+      "category": "film",
+      "recipe": {
+        "warmth": -0.3,
+        "tint": -0.08,
+        "saturation": -0.05,
+        "fade": 0.12,
+        "grain": 0.3,
+        "shadowTone": {
+          "color": "#1E5F74",
+          "strength": 0.35
+        },
+        "highlightTone": {
+          "color": "#E8F4FF",
+          "strength": 0.2
+        }
+      }
+    },
+    {
+      "id": "slide-film",
+      "name": "Slide Film",
+      "category": "film",
+      "recipe": {
+        "contrast": 0.35,
+        "shadows": -0.2,
+        "saturation": 0.3,
+        "vibrance": 0.2,
+        "vignette": 0.3,
+        "sharpen": 0.2
+      }
+    },
+    {
+      "id": "cross-process",
+      "name": "Cross Process",
+      "category": "film",
+      "recipe": {
+        "contrast": 0.25,
+        "tint": -0.2,
+        "saturation": 0.2,
+        "fade": 0.1,
+        "shadowTone": {
+          "color": "#1C5E8C",
+          "strength": 0.55
+        },
+        "highlightTone": {
+          "color": "#F5E35A",
+          "strength": 0.5
+        }
+      }
+    },
+    {
+      "id": "seventies",
+      "name": "Seventies",
+      "category": "vintage",
+      "recipe": {
+        "contrast": -0.05,
+        "warmth": 0.45,
+        "tint": 0.1,
+        "saturation": -0.15,
+        "fade": 0.3,
+        "vignette": 0.35,
+        "grain": 0.4,
+        "shadowTone": {
+          "color": "#6B3F2A",
+          "strength": 0.3
+        },
+        "highlightTone": {
+          "color": "#FFB86B",
+          "strength": 0.35
+        }
+      }
+    },
+    {
+      "id": "instant",
+      "name": "Instant",
+      "category": "vintage",
+      "recipe": {
+        "exposure": 0.15,
+        "contrast": -0.1,
+        "warmth": 0.1,
+        "tint": 0.12,
+        "saturation": -0.1,
+        "fade": 0.35,
+        "vignette": 0.3,
+        "shadowTone": {
+          "color": "#2E4A63",
+          "strength": 0.35
+        },
+        "highlightTone": {
+          "color": "#FFF0C8",
+          "strength": 0.3
+        }
+      }
+    },
+    {
+      "id": "sepia",
+      "name": "Sepia",
+      "category": "vintage",
+      "recipe": {
+        "warmth": 0.2,
+        "saturation": -1,
+        "fade": 0.12,
+        "vignette": 0.3,
+        "grain": 0.25,
+        "shadowTone": {
+          "color": "#4A3220",
+          "strength": 0.55
+        },
+        "highlightTone": {
+          "color": "#E8C9A0",
+          "strength": 0.5
+        }
+      }
+    },
+    {
+      "id": "silver",
+      "name": "Silver",
+      "category": "mono",
+      "recipe": {
+        "contrast": 0.15,
+        "saturation": -1,
+        "fade": 0.05,
+        "sharpen": 0.2,
+        "grain": 0.15
+      }
+    },
+    {
+      "id": "noir",
+      "name": "Noir",
+      "category": "mono",
+      "recipe": {
+        "exposure": -0.15,
+        "contrast": 0.5,
+        "highlights": 0.15,
+        "shadows": -0.3,
+        "saturation": -1,
+        "vignette": 0.55,
+        "grain": 0.35,
+        "sharpen": 0.25
+      }
+    },
+    {
+      "id": "soft-mono",
+      "name": "Soft Mono",
+      "category": "mono",
+      "recipe": {
+        "exposure": 0.1,
+        "contrast": -0.15,
+        "saturation": -1,
+        "fade": 0.3,
+        "grain": 0.2
+      }
+    }
+  ]
+}

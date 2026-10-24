@@ -1,0 +1,95 @@
+name: Grade
+options:
+  bundleIdPrefix: com.jondoesflow
+  deploymentTarget:
+    iOS: "18.0"
+  createIntermediateGroups: true
+  developmentLanguage: en-GB
+
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    SWIFT_STRICT_CONCURRENCY: complete
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    ENABLE_USER_SCRIPT_SANDBOXING: YES
+    DEAD_CODE_STRIPPING: YES
+    LOCALIZATION_PREFERS_STRING_CATALOGS: YES
+
+targets:
+  Grade:
+    type: application
+    platform: iOS
+    sources:
+      - path: Grade
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.jondoesflow.grade
+        PRODUCT_NAME: Grade
+        TARGETED_DEVICE_FAMILY: "1"
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        CODE_SIGN_STYLE: Automatic
+        GENERATE_INFOPLIST_FILE: NO
+      configs:
+        # The demo photo is only for UI tests and screenshots; it never ships.
+        Release:
+          EXCLUDED_SOURCE_FILE_NAMES: DemoPhoto.jpg
+    info:
+      path: Grade/Info.plist
+      properties:
+        CFBundleDisplayName: Grade
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        LSApplicationCategoryType: public.app-category.photography
+        NSPhotoLibraryAddUsageDescription: Grade saves your edited photos to your library. Your originals are never changed.
+        UILaunchScreen:
+          UIColorName: LaunchBackground
+        UIApplicationSceneManifest:
+          UIApplicationSupportsMultipleScenes: false
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+        UIUserInterfaceStyle: Dark
+        ITSAppUsesNonExemptEncryption: false
+
+  GradeTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: GradeTests
+    dependencies:
+      - target: Grade
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.jondoesflow.grade.tests
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_HOST: $(BUILT_PRODUCTS_DIR)/Grade.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Grade
+        BUNDLE_LOADER: $(TEST_HOST)
+
+  GradeUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - path: GradeUITests
+    dependencies:
+      - target: Grade
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.jondoesflow.grade.uitests
+        GENERATE_INFOPLIST_FILE: YES
+        TEST_TARGET_NAME: Grade
+
+schemes:
+  Grade:
+    build:
+      targets:
+        Grade: all
+        GradeTests: [test]
+        GradeUITests: [test]
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets:
+        - GradeTests
+        - GradeUITests
