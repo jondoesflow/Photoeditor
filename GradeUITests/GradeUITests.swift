@@ -86,7 +86,8 @@ final class GradeUITests: XCTestCase {
         XCTAssertTrue(app.buttons["Replace Original"].firstMatch.exists)
         screenshot("05-save-choice", app)
         saveAsNew.tap()
-        let toast = app.descendants(matching: .any)["savedToast"].firstMatch
+        // The checkmark icon shares the identifier (its label is "Selected"), so look for the text.
+        let toast = app.staticTexts["savedToast"].firstMatch
         XCTAssertTrue(toast.waitForExistence(timeout: 20))
         XCTAssertTrue(toast.label.contains("Saved as new photo"), toast.label)
         screenshot("05-saved", app)
